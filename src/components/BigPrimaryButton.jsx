@@ -1,9 +1,7 @@
-const BigPrimaryButton = ({children,onClick}) =>{
+const BigPrimaryButton = ({children, ... props}) =>{
     return(
 
-        <button
-        className="bg-black text-white font-semibold py-2 px-10"
-        >
+        <button {...props} className="bg-black text-white font-semibold py-2 px-10 cursor-pointer">
         {children}
         </button>
 )
