@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import BigPrimaryButton from "../components/BigPrimaryButton";
 import Task from "../components/Task";
-
+import { FiRotateCw } from "react-icons/fi"; // Icon replay
 
 function Home() {
   const [data, setData] = useState([]);
@@ -49,26 +49,58 @@ function Home() {
     return `${min}.${sec}`;
   };
 
-  console.log("Data:", data);
+  const handleReplay = () => {
+    if (data.length > 0) {
+      const selected = data[2];
+      setTimeLeft(mode === "pomodoro" ? selected.time : selected.break);
+      setIsRunning(false);
+      clearInterval(intervalRef.current);
+    }
+  };
 
   return (
     <div className="flex m-auto flex-col items-center">
       <Navbar />
       <div className="w-[50%] flex flex-col gap-8 mt-9">
         <div className="flex justify-evenly p-4">
-          <button onClick={() => setMode("pomodoro")} className={` ${mode === "pomodoro" ? "font-bold border-b-2 " : "font=semibold"}`}>
+          <button
+            onClick={() => setMode("pomodoro")}
+            className={`${
+              mode === "pomodoro"
+                ? "font-bold border-b-2"
+                : "font-semibold"
+            }`}
+          >
             Pomodoro
           </button>
-          <button onClick={() => setMode("short break")} className={` ${mode === "short break" ? "font-bold border-b-2" : "font-semibold"}`}>
+          <button
+            onClick={() => setMode("short break")}
+            className={`${
+              mode === "short break"
+                ? "font-bold border-b-2"
+                : "font-semibold"
+            }`}
+          >
             Short break
           </button>
         </div>
-        <div className="w-56 h-56 rounded-full flex m-auto items-center justify-center border-8 border-black font-bold text-5xl">{formatTime(timeLeft)}</div>
-        <div className="m-auto flex justify-center items-center">
-          <BigPrimaryButton onClick={() => setIsRunning((prev) => !prev)}>{!isRunning ? "Start" : "Stop"}</BigPrimaryButton>
+        <div className="w-56 h-56 rounded-full flex m-auto items-center justify-center border-8 border-black font-bold text-5xl">
+          {formatTime(timeLeft)}
+        </div>
+        <div className="m-auto flex justify-center items-center gap-13">
+          <BigPrimaryButton onClick={() => setIsRunning((prev) => !prev)}>
+            {!isRunning ? "Start" : "Pause"}
+          </BigPrimaryButton>
+          <button
+            onClick={handleReplay}
+            className="text-black hover:text-gray-700 text-3xl"
+            title="Replay"
+          >
+            <FiRotateCw />
+          </button>
         </div>
       </div>
-      <Task></Task>
+      <Task />
     </div>
   );
 }
