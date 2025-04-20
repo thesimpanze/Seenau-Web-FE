@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({mode}) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -12,6 +12,8 @@ const Navbar = () => {
     // Arahkan ke halaman login
     navigate("/login");
   };
+
+  console.log(mode);
 
   return (
     <nav className="w-full bg-white px-4 py-2 flex justify-between items-center relative">
@@ -28,7 +30,7 @@ const Navbar = () => {
       {/* Right Section */}
       <div className="flex justify-center items-center gap-4 relative">
         {/* Timer Text */}
-        <div className="text-sm text-black font-medium tracking-wide">Timer</div>
+        <div className="text-sm text-black font-medium tracking-wide capitalize">{mode}</div>
 
         {/* Menu Toggle Button */}
         <button
@@ -62,7 +64,7 @@ const Navbar = () => {
                 handleLogout();
               }}
             >
-            
+            Log out
             </button>
           </div>
         )}

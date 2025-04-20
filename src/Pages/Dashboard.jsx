@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
   Cell
 } from "recharts";
+import EditProfile from "../components/EditProfile";
 
 const data = [
   { name: "Mon", focus: 3 },
@@ -22,10 +23,17 @@ const data = [
   { name: "Sun", focus: 2.5 },
 ];
 
+
 const barColors = ["#FACC15", "#000000"];
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
+    setShowModal(true);
+  }
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <div className="min-h-screen bg-white pb-24 relative">
@@ -44,7 +52,7 @@ const Dashboard = () => {
           </div>
         </div>
         <button
-          onClick={() => setShowModal(true)} // Memastikan modal terbuka
+          onClick={openModal} // Memastikan modal terbuka
           className="border border-white px-4 py-2 rounded hover:bg-white hover:text-black transition"
         >
           Edit Profile
@@ -95,69 +103,7 @@ const Dashboard = () => {
 
       {/* Modal Edit Profile */}
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-white w-full max-w-xl p-8 rounded-lg relative shadow-xl shadow-gray-600">
-            <button
-              onClick={() => setShowModal(false)} // Menutup modal saat tombol ini diklik
-              className="absolute top-3 right-4 text-2xl font-bold"
-            >
-              ×
-            </button>
-
-            <div className="flex gap-6">
-              <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl font-semibold">
-                KJ
-              </div>
-              <form className="flex-1 flex flex-col gap-3">
-                <label className="font-semibold">Full Name</label>
-                <input
-                  type="text"
-                  placeholder="Name"
-                  className="border px-3 py-2 rounded"
-                />
-
-                <label className="font-semibold">Email</label>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="border px-3 py-2 rounded"
-                />
-
-                <label className="font-semibold mt-2">Change Password</label>
-                <input
-                  type="password"
-                  placeholder="Current Password"
-                  className="border px-3 py-2 rounded"
-                />
-                <input
-                  type="password"
-                  placeholder="New Password"
-                  className="border px-3 py-2 rounded"
-                />
-                <input
-                  type="password"
-                  placeholder="Confirm New Password"
-                  className="border px-3 py-2 rounded"
-                />
-
-                <div className="flex gap-4 mt-4">
-                  <button
-                    type="submit"
-                    className="bg-black text-white px-6 py-2 rounded"
-                  >
-                    Save Changes
-                  </button>
-                  <button
-                    type="button"
-                    className="border border-black text-red-600 px-6 py-2 rounded font-semibold"
-                  >
-                    Delete Account
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
+        <EditProfile onCancel={closeModal}/>
       )}
     </div>
   );
