@@ -1,17 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BigPrimaryButton from "../components/BigPrimaryButton";
 import Navbar from "../components/Navbar";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Cell
-} from "recharts";
+
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import EditProfile from "../components/EditProfile";
+import axios from "axios";
+import getUser from "../services/getUser";
 
 const data = [
   { name: "Mon", focus: 3 },
@@ -23,18 +17,27 @@ const data = [
   { name: "Sun", focus: 2.5 },
 ];
 
-
 const barColors = ["#FACC15", "#000000"];
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const openModal = () => {
     setShowModal(true);
-  }
+  };
+  const [users, setUsers] = useState([]);
   const closeModal = () => {
     setShowModal(false);
   };
-
+  useEffect(() => {
+    getUser.get('/api/users')
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        console.error("Error ambil data:", err);
+      });
+  }, []);
+  console.log(users);
   return (
     <div className="min-h-screen bg-white pb-24 relative">
       <Navbar />
@@ -42,9 +45,7 @@ const Dashboard = () => {
       {/* Header Section */}
       <section className="bg-black text-white px-6 py-6 flex justify-between items-center">
         <div className="flex items-center gap-4">
-          <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-2xl font-semibold">
-            Ur
-          </div>
+          <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-2xl font-semibold">Ur</div>
           <div>
             <h1 className="text-2xl font-bold">User</h1>
             <p className="text-sm">user@gmail.com</p>
@@ -77,9 +78,7 @@ const Dashboard = () => {
 
       {/* Chart Section */}
       <section className="mt-16 px-10">
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          Focus Time This Week
-        </h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Focus Time This Week</h2>
         <div className="w-full h-72 shadow-lg bg-white rounded-lg p-4">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data} barSize={40}>
@@ -89,11 +88,7 @@ const Dashboard = () => {
               <Tooltip />
               <Bar dataKey="focus">
                 {data.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={barColors[index % barColors.length]}
-                    radius={[0, 0, 0, 0]}
-                  />
+                  <Cell key={`cell-${index}`} fill={barColors[index % barColors.length]} radius={[0, 0, 0, 0]} />
                 ))}
               </Bar>
             </BarChart>
@@ -102,9 +97,7 @@ const Dashboard = () => {
       </section>
 
       {/* Modal Edit Profile */}
-      {showModal && (
-        <EditProfile onCancel={closeModal}/>
-      )}
+      {showModal && <EditProfile onCancel={closeModal} />}
     </div>
   );
 };

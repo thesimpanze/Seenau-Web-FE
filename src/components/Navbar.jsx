@@ -1,19 +1,34 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
 
 const Navbar = ({mode}) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const API = axios.create({
+    baseURL: 'http://localhost:3000/api/v1/auth/logout',
+  });
 
-  const handleLogout = () => {
-    // Hapus token atau data login
-    localStorage.removeItem("token"); // Ganti sesuai kebutuhan
-    // Arahkan ke halaman login
-    navigate("/login");
+  
+  const handleLogout = async () => {
+    try{
+
+      localStorage.removeItem("token",);
+      await axios.get("http://localhost:3000/api/v1/auth/logout",{
+        withCredentials: true,}) 
+      console.log('berhasil keluar ahh')
+    }
+    catch(err){
+      console.log('gagal keluar')
+    }
+    
   };
 
   console.log(mode);
+  console.log(localStorage.getItem("token")); // harus ada nilainya
+  
 
   return (
     <nav className="w-full bg-white px-4 py-2 flex justify-between items-center relative">

@@ -14,7 +14,7 @@ const TimerMode =({onCancel})=>{
           .then((json) => setData(json))
           .catch((err) => console.error("Error:", err));
       }, []);
-      console.log(data);
+      
     return (
         <>
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/80">
