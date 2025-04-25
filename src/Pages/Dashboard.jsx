@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import BigPrimaryButton from "../components/BigPrimaryButton";
 import Navbar from "../components/Navbar";
-
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import EditProfile from "../components/EditProfile";
 import axios from "axios";
-import getUser from "../services/getUser";
+
+
 
 const data = [
   { name: "Mon", focus: 3 },
@@ -28,16 +28,8 @@ const Dashboard = () => {
   const closeModal = () => {
     setShowModal(false);
   };
-  useEffect(() => {
-    getUser.get('/api/users')
-      .then((res) => {
-        setUsers(res.data);
-      })
-      .catch((err) => {
-        console.error("Error ambil data:", err);
-      });
-  }, []);
-  console.log(users);
+
+  
   return (
     <div className="min-h-screen bg-white pb-24 relative">
       <Navbar />

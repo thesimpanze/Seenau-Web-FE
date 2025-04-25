@@ -4,15 +4,19 @@ import BigPrimaryButton from "../components/BigPrimaryButton";
 import Task from "../components/Task";
 import {FiPlay, FiPause,  FiRotateCcw } from "react-icons/fi";
 import TimerMode from "../components/TimerMode";
+import { Cookies, useCookies } from "react-cookie";
 
 
-function Home() {
+
+const Home = () => {
   const [data, setData] = useState([]);
   const [mode, setMode] = useState("pomodoro");
   const [timeLeft, setTimeLeft] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [cookies] = useCookies(['cookie']);
+  console.log(cookies.cookie)
 
   const openModal = () =>{
     setIsModalOpen(true);
@@ -83,7 +87,7 @@ function Home() {
         </div>
         <button onClick={openModal}>
 
-        <div className="w-56 h-56 rounded-full flex m-auto items-center justify-center border-8 border-black font-bold text-5xl">{formatTime(timeLeft)}</div>
+        <div className="w-56 h-56 rounded-full flex m-auto items-center justify-center border-8 border-black font-bold text-5xl ">{formatTime(timeLeft)}</div>
         </button>
         <div className="m-auto flex justify-center items-center gap-11 text-3xl">
           <button onClick={() => setIsRunning((prev) => !prev)} className="">{!isRunning ? (<FiPlay title="Pause"/>) : (<FiPause title="Play"/>)}</button>
