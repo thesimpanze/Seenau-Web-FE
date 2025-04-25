@@ -19,6 +19,7 @@ const Navbar = ({mode}) => {
       await axios.get("http://localhost:3000/api/v1/auth/logout",{
         withCredentials: true,}) 
       console.log('berhasil keluar ahh')
+      navigate('/login')
     }
     catch(err){
       console.log('gagal keluar')
