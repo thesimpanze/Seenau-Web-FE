@@ -18,17 +18,15 @@ const Navbar = ({mode}) => {
       localStorage.removeItem("token",);
       await axios.get("http://localhost:3000/api/v1/auth/logout",{
         withCredentials: true,}) 
-      console.log('berhasil keluar ahh')
+      console.log('berhasil keluar ahh', Response.data)
       navigate('/login')
     }
     catch(err){
       console.log('gagal keluar')
     }
     
-  };
-
-  console.log(mode);
-  console.log(localStorage.getItem("token")); // harus ada nilainya
+  };  
+  
   
 
   return (
