@@ -3,6 +3,7 @@ import BigPrimaryButton from "../components/BigPrimaryButton";
 import Navbar from "../components/Navbar";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import EditProfile from "../components/EditProfile";
+import OtpModal from "../components/OtpModal";
 import axios from "axios";
 
 
@@ -21,12 +22,16 @@ const barColors = ["#FACC15", "#000000"];
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showOtpModal, setShowOtpModal] = useState(false);
   const openModal = () => {
     setShowModal(true);
   };
   const [users, setUsers] = useState([]);
   const closeModal = () => {
     setShowModal(false);
+  };
+  const closeOtpModal = () => {
+    setShowOtpModal(false);
   };
 
   
@@ -90,6 +95,9 @@ const Dashboard = () => {
 
       {/* Modal Edit Profile */}
       {showModal && <EditProfile onCancel={closeModal} />}
+
+      {/* Modal OTP */}
+      {showOtpModal && <OtpModal onClose={closeOtpModal} />}
     </div>
   );
 };

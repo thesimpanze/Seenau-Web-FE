@@ -1,11 +1,13 @@
-const PrimaryButton = ({ children, onClick }) => {
+const PrimaryButton = ({ children, onClick, className = "" }) => {
     return (
-        <button
-        className="bg-black text-white font-semibold py-2 px-4"
+      <button
         onClick={onClick}
-        >
+        className={`bg-black text-white font-semibold py-2 px-4 rounded ${className}`}
+      >
         {children}
-        </button>
+      </button>
     );
-    }
-export default PrimaryButton;
+  };
+  
+  export default PrimaryButton;
+  

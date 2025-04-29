@@ -1,9 +1,16 @@
+import { useState } from "react";
 import DangerButton from "./DangerButton"
 import PrimaryButton from "./PrimaryButton"
+import OtpModal from "./OtpModal"; // import komponen OTP modal
 
 
-const EditProfile = ({onCancel})=> {
-    
+const EditProfile = ({ onCancel, showOtpModal, setShowOtpModal }) => {
+  const openModalOTP = () => {
+    onCancel(); // tutup EditProfile modal
+    setShowOtpModal(true); // buka OTP modal
+  };
+
+  
     return (
         <>
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/80">
@@ -62,11 +69,22 @@ const EditProfile = ({onCancel})=> {
                   >
                     Delete Account
                   </DangerButton>
+                  <PrimaryButton 
+                  type="button"
+                  className="bg-yellow-500 hover:bg-yellow-600 text-white"
+                  onClick={openModalOTP}
+
+                  >
+                  Verfikasi
+                  </PrimaryButton>
                 </div>
               </form>
             </div>
           </div>
         </div>
+
+        {showOtpModal && <OtpModal onClose={closeModal} /> }
+
         </>
     )
 }
