@@ -2,11 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import BigPrimaryButton from "../components/BigPrimaryButton";
 import Task from "../components/Task";
-import {FiPlay, FiPause,  FiRotateCcw } from "react-icons/fi";
+import { FiPlay, FiPause, FiRotateCcw } from "react-icons/fi";
 import TimerMode from "../components/TimerMode";
-import { Cookies, useCookies } from "react-cookie";
-
-
+import { useCookies } from "react-cookie";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -15,16 +13,24 @@ const Home = () => {
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [cookies] = useCookies(['cookie']);
-  console.log(cookies.cookie)
+  const [cookies] = useCookies(["cookie"]);
+  console.log(cookies.cookie);
 
-  const openModal = () =>{
+  const openModal = () => {
     setIsModalOpen(true);
-  }
+  };
 
-  const closeModal = () =>{
+  const closeModal = () => {
     setIsModalOpen(false);
-  }
+  };
+
+  const handleSelectPreset = (focus, breakTime) => {
+    const selectedTime = mode === "pomodoro" ? focus : breakTime;
+    setTimeLeft(selectedTime * 60); // waktu dalam detik
+    setIsRunning(false);
+    clearInterval(intervalRef.current);
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     fetch("/data.json")
@@ -36,7 +42,7 @@ const Home = () => {
   useEffect(() => {
     if (data.length > 0) {
       const selected = data[2];
-      setTimeLeft(mode === "pomodoro" ? selected.time : selected.break);
+      setTimeLeft(mode === "pomodoro" ? selected.time * 60 : selected.break * 60);
       setIsRunning(false);
       clearInterval(intervalRef.current);
     }
@@ -61,13 +67,13 @@ const Home = () => {
   const formatTime = (seconds) => {
     const min = String(Math.floor(seconds / 60)).padStart(2, "0");
     const sec = String(seconds % 60).padStart(2, "0");
-    return `${min}.${sec}`;
+    return `${min}:${sec}`;
   };
 
   const handleReplay = () => {
     if (data.length > 0) {
       const selected = data[2];
-      setTimeLeft(mode === "pomodoro" ? selected.time : selected.break);
+      setTimeLeft(mode === "pomodoro" ? selected.time * 60 : selected.break * 60);
       setIsRunning(false);
       clearInterval(intervalRef.current);
     }
@@ -78,31 +84,41 @@ const Home = () => {
       <Navbar mode={mode} />
       <div className="w-[50%] flex flex-col gap-8 mt-9">
         <div className="flex justify-evenly p-4">
-          <button onClick={() => setMode("pomodoro")} className={`${mode === "pomodoro" ? "font-bold border-b-2" : "font-semibold"}`}>
+          <button
+            onClick={() => setMode("pomodoro")}
+            className={`${mode === "pomodoro" ? "font-bold border-b-2" : "font-semibold"}`}
+          >
             Pomodoro
           </button>
-          <button onClick={() => setMode("short break")} className={`${mode === "short break" ? "font-bold border-b-2" : "font-semibold"}`}>
+          <button
+            onClick={() => setMode("short break")}
+            className={`${mode === "short break" ? "font-bold border-b-2" : "font-semibold"}`}
+          >
             Short break
           </button>
         </div>
         <button onClick={openModal}>
-
-        <div className="w-56 h-56 rounded-full flex m-auto items-center justify-center border-8 border-black font-bold text-5xl ">{formatTime(timeLeft)}</div>
+          <div className="w-56 h-56 rounded-full flex m-auto items-center justify-center border-8 border-black font-bold text-5xl ">
+            {formatTime(timeLeft)}
+          </div>
         </button>
         <div className="m-auto flex justify-center items-center gap-11 text-3xl">
-          <button onClick={() => setIsRunning((prev) => !prev)} className="">{!isRunning ? (<FiPlay title="Pause"/>) : (<FiPause title="Play"/>)}</button>
-          <button onClick={handleReplay} className="text-black hover:text-gray-700 " title="Replay">
+          <button onClick={() => setIsRunning((prev) => !prev)} className="">
+            {!isRunning ? <FiPlay title="Start" /> : <FiPause title="Pause" />}
+          </button>
+          <button onClick={handleReplay} className="text-black hover:text-gray-700" title="Replay">
             <FiRotateCcw />
           </button>
         </div>
       </div>
+
       {isModalOpen && (
-        
-      <TimerMode onCancel={closeModal}/>
+        <TimerMode onCancel={closeModal} onSelectPreset={handleSelectPreset} />
       )}
+
       <Task />
     </div>
   );
-}
+};
 
 export default Home;
