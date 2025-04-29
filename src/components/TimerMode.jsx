@@ -8,6 +8,7 @@ import { FaCircle } from "react-icons/fa";
 
 const TimerMode =({onCancel})=>{
     const [data, setData] = useState([]);
+    const [selected, setSelected] = useState(null);
     useEffect(() => {
         fetch("/data.json")
           .then((res) => res.json())
@@ -21,21 +22,27 @@ const TimerMode =({onCancel})=>{
         <div className="bg-white px-8 py-10 flex flex-col gap-4">
             <h1 className="font-bold text-xl">Focus Level</h1>
             <div className="  flex flex-col gap-3">
-                {data.map((item, index) =>(
-                    <div key={index} className="flex gap-3 border-b-2">
-                        <input type="checkbox" />
-                        <div className="flex flex-col gap-0.5">
-                            <h1 className="font-semibold">{item.name}</h1>
-                            <div className="flex items-center gap-6">
-                                <span>{item.time} Min </span>
-                                <span className="text-xs">
-                                <FaCircle/>                                
-                                </span>
-                                <span>{item.break} Min </span>
-                            </div>
-                        </div>
+            {data.map((item, index) => (
+                <div key={index} className="flex gap-3 border-b-2">
+                    <input
+                    type="radio"
+                    name="focus-level"
+                    checked={selected === index}
+                    onChange={() => setSelected(index)}
+                    />
+                    <div className="flex flex-col gap-0.5">
+                    <h1 className="font-semibold">{item.name}</h1>
+                    <div className="flex items-center gap-6">
+                        <span>{item.time} Min </span>
+                        <span className="text-xs">
+                        <FaCircle />
+                        </span>
+                        <span>{item.break} Min </span>
                     </div>
+                    </div>
+                </div>
                 ))}
+
             </div>
             <div className="w-full">
                 <BigPrimaryButton onClick={onCancel}>Save</BigPrimaryButton>
