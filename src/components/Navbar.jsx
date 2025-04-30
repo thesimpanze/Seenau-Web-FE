@@ -22,7 +22,7 @@ const Navbar = ({mode}) => {
       navigate('/login')
     }
     catch(err){
-      console.log('gagal keluar')
+      console.log('gagal keluar', err.response?.data?.message || err.message)
     }
     
   };  
