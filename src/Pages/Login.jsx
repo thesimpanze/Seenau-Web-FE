@@ -15,9 +15,9 @@ const Login = () => {
       let res = await login(email, password);
       console.log("berhasil masuk", res.message);
       setIsCorrect("Berhasil Masuk")
-      setTimeout(()=>{
-        navigate("/");
-      }, 1000)
+      navigate("/");
+      // setTimeout(()=>{
+      // }, 1000)
       localStorage.setItem('token', res.data.token);
     } catch (err) {
       console.log(err.response?.data?.message || err.message);
