@@ -41,8 +41,13 @@ const Home = () => {
 
   useEffect(() => {
     if (data.length > 0) {
+
       const selected = data[2];
       setTimeLeft(mode === "pomodoro" ? selected.time * 60 : selected.break * 60);
+
+      const selected = data[1];
+      setTimeLeft(mode === "pomodoro" ? selected.time : selected.break);
+
       setIsRunning(false);
       clearInterval(intervalRef.current);
     }
