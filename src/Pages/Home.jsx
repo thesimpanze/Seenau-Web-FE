@@ -14,9 +14,6 @@ const Home = () => {
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [cookies] = useCookies(["cookie"]);
-
-  console.log(cookies.cookie);
 
   const openModal = () => {
     setIsModalOpen(true)
