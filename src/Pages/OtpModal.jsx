@@ -1,16 +1,19 @@
 import { useState } from "react";
+import PrimaryButton from "../components/PrimaryButton";
+import DangerButton from "../components/DangerButton";
+import axios from "axios";
 
-const OtpModal = ({ onClick }) => {
+const OtpModal = () => {
   const [otp, setOtp] = useState("");
 
   const handleSubmit = () => {
     console.log("OTP submitted:", otp);
-    // Tambahkan logika verifikasi OTP di sini
-    onClose(); // Tutup modal setelah submit
+    
+    
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+    <div className="flex items-center justify-center">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-lg font-bold mb-4">Masukkan Kode OTP</h2>
         <input
@@ -21,18 +24,18 @@ const OtpModal = ({ onClick }) => {
           className="border px-3 py-2 rounded w-full mb-4"
         />
         <div className="flex justify-end gap-2">
-          <button
-            onClick={onClose}
+          <DangerButton
+            
             className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400"
           >
             Cancel
-          </button>
-          <button
+          </DangerButton>
+          <PrimaryButton
             onClick={handleSubmit}
-            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
+            
           >
             Submit
-          </button>
+          </PrimaryButton>
         </div>
       </div>
     </div>

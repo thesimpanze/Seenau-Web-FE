@@ -5,6 +5,7 @@ import Task from "../components/Task";
 import { FiPlay, FiPause, FiRotateCcw } from "react-icons/fi";
 import TimerMode from "../components/TimerMode";
 import { useCookies } from "react-cookie";
+import LandingPage from "../components/LandingPage";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -14,10 +15,11 @@ const Home = () => {
   const intervalRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cookies] = useCookies(["cookie"]);
+
   console.log(cookies.cookie);
 
   const openModal = () => {
-    setIsModalOpen(true);
+    setIsModalOpen(true)
   };
 
   const closeModal = () => {
@@ -26,7 +28,7 @@ const Home = () => {
 
   const handleSelectPreset = (focus, breakTime) => {
     const selectedTime = mode === "pomodoro" ? focus : breakTime;
-    setTimeLeft(selectedTime * 60); // waktu dalam detik
+    setTimeLeft(selectedTime * 60); 
     setIsRunning(false);
     clearInterval(intervalRef.current);
     setIsModalOpen(false);
@@ -39,13 +41,13 @@ const Home = () => {
       .catch((err) => console.error("Error:", err));
   }, []);
 
+  const selected = data[2];
   useEffect(() => {
     if (data.length > 0) {
+      const selected = data[1];
 
-      const selected = data[2];
       setTimeLeft(mode === "pomodoro" ? selected.time * 60 : selected.break * 60);
 
-      const selected = data[1];
       setTimeLeft(mode === "pomodoro" ? selected.time : selected.break);
 
       setIsRunning(false);
@@ -85,44 +87,39 @@ const Home = () => {
   };
 
   return (
-    <div className="flex m-auto flex-col items-center">
-      <Navbar mode={mode} />
-      <div className="w-[50%] flex flex-col gap-8 mt-9">
-        <div className="flex justify-evenly p-4">
-          <button
-            onClick={() => setMode("pomodoro")}
-            className={`${mode === "pomodoro" ? "font-bold border-b-2" : "font-semibold"}`}
-          >
-            Pomodoro
-          </button>
-          <button
-            onClick={() => setMode("short break")}
-            className={`${mode === "short break" ? "font-bold border-b-2" : "font-semibold"}`}
-          >
-            Short break
-          </button>
-        </div>
-        <button onClick={openModal}>
-          <div className="w-56 h-56 rounded-full flex m-auto items-center justify-center border-8 border-black font-bold text-5xl ">
-            {formatTime(timeLeft)}
+    <>
+      <LandingPage />
+      <div className="flex m-auto flex-col items-center">
+        <Navbar mode={mode} />
+        <div className="w-[50%] flex flex-col gap-8 mt-9">
+          <div className="flex justify-evenly p-4">
+            <button onClick={() => setMode("pomodoro")} className={`${mode === "pomodoro" ? "font-bold border-b-2" : "font-semibold hover:cursor-pointer"}`}>
+              Pomodoro
+            </button>
+            <button onClick={() => setMode("short break")} className={`${mode === "short break" ? "font-bold border-b-2" : "font-semibold hover:cursor-pointer"}`}>
+              Short break
+            </button>
           </div>
-        </button>
-        <div className="m-auto flex justify-center items-center gap-11 text-3xl">
-          <button onClick={() => setIsRunning((prev) => !prev)} className="">
-            {!isRunning ? <FiPlay title="Start" /> : <FiPause title="Pause" />}
+          <button onClick={openModal}>
+            <div className="w-56 h-56 rounded-full flex m-auto items-center justify-center border-8 border-black font-bold text-5xl cursor-pointer  hover:scale-110 hover:shadow-2xl hover:drop-shadow-black/80 hover:border-[10px]  transition-all duration-150 delay-150">
+              {formatTime(timeLeft)}
+            </div>
           </button>
-          <button onClick={handleReplay} className="text-black hover:text-gray-700" title="Replay">
-            <FiRotateCcw />
-          </button>
+          <div className="m-auto flex justify-center items-center gap-11 text-3xl ">
+            <button onClick={() => setIsRunning((prev) => !prev)} className="cursor-pointer">
+              {!isRunning ? <FiPlay title="Start" /> : <FiPause title="Pause" />}
+            </button>
+            <button onClick={handleReplay} className="text-black hover:text-gray-700" title="Replay">
+              <FiRotateCcw />
+            </button>
+          </div>
         </div>
+
+        {isModalOpen && <TimerMode onCancel={closeModal} onSelectPreset={handleSelectPreset} />}
+
+        <Task />
       </div>
-
-      {isModalOpen && (
-        <TimerMode onCancel={closeModal} onSelectPreset={handleSelectPreset} />
-      )}
-
-      <Task />
-    </div>
+    </>
   );
 };
 

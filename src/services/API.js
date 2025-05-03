@@ -17,6 +17,11 @@ export const register = async (email, name, password) =>{
   return await axios.post(`${API_URL}auth/register`, {
     email, name, password
   })
-}
+};
+export const generateOTP = async () =>{
+  return await axios.post(`${API_URL}auth/generate-otp-code`, {
+    
+  })
+};
 
 

@@ -3,7 +3,7 @@ import BigPrimaryButton from "../components/BigPrimaryButton";
 import Navbar from "../components/Navbar";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import EditProfile from "../components/EditProfile";
-import OtpModal from "../components/OtpModal";
+
 import axios from "axios";
 
 

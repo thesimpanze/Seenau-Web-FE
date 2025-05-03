@@ -1,13 +1,22 @@
 import { useState } from "react";
 import DangerButton from "./DangerButton"
 import PrimaryButton from "./PrimaryButton"
-import OtpModal from "./OtpModal"; // import komponen OTP modal
+import OtpModal from "../Pages/OtpModal";
+import SecondaryButton from "./SecondaryButton";
+import axios from "axios";
+import { generateOTP } from "../services/API";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
-const EditProfile = ({ onCancel, showOtpModal, setShowOtpModal }) => {
-  const openModalOTP = () => {
-    onCancel(); // tutup EditProfile modal
-    setShowOtpModal(true); // buka OTP modal
+
+
+
+
+const EditProfile = ({ onCancel }) => {
+  const navigate = useNavigate()
+  const handleOTP =()=> {
+   navigate('/otp')
+    
   };
 
   
@@ -16,7 +25,7 @@ const EditProfile = ({ onCancel, showOtpModal, setShowOtpModal }) => {
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/80">
           <div className="bg-white w-full max-w-xl p-8 rounded-lg relative shadow-lg shadow-gray-600">
             <button
-              onClick={onCancel} // Menutup modal saat tombol ini diklik
+              onClick={onCancel} 
               className="absolute top-3 right-4 text-2xl font-bold"
             >
               ×
@@ -57,8 +66,9 @@ const EditProfile = ({ onCancel, showOtpModal, setShowOtpModal }) => {
                   placeholder="Confirm New Password"
                   className="border px-3 py-2 rounded"
                 />
+                
 
-                <div className="flex gap-4 mt-4">
+                <div className="flex gap-4 text-sm">
                   <PrimaryButton
                     
                   >
@@ -69,21 +79,21 @@ const EditProfile = ({ onCancel, showOtpModal, setShowOtpModal }) => {
                   >
                     Delete Account
                   </DangerButton>
-                  <PrimaryButton 
+                  <SecondaryButton 
                   type="button"
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white"
-                  onClick={openModalOTP}
+                  
+                  onClick={handleOTP}
 
                   >
                   Verfikasi
-                  </PrimaryButton>
+                  </SecondaryButton>
                 </div>
               </form>
             </div>
           </div>
         </div>
 
-        {showOtpModal && <OtpModal onClose={closeModal} /> }
+        
 
         </>
     )

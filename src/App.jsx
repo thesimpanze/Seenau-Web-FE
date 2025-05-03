@@ -5,6 +5,10 @@ import Dashboard from "./Pages/Dashboard";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import TimerMode from "./components/TimerMode";
+import OtpModal from "./Pages/OtpModal";
+import LandingPage from "./components/LandingPage";
+
+
 
 function App() {
   return (
@@ -15,6 +19,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/timer" element={<TimerMode />} />
+        <Route path="/otp" element={<OtpModal />} />
+        <Route path="/test" element={<LandingPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
