@@ -5,7 +5,8 @@ import OtpModal from "../Pages/OtpModal";
 import SecondaryButton from "./SecondaryButton";
 import axios from "axios";
 import { generateOTP } from "../services/API";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, Link } from "react-router-dom";
+
 
 
 
@@ -79,14 +80,13 @@ const EditProfile = ({ onCancel }) => {
                   >
                     Delete Account
                   </DangerButton>
+                  <Link to="/otp">
                   <SecondaryButton 
                   type="button"
-                  
-                  onClick={handleOTP}
-
                   >
                   Verfikasi
                   </SecondaryButton>
+                    </Link>
                 </div>
               </form>
             </div>

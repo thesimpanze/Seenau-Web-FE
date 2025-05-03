@@ -7,9 +7,7 @@ import axios from "axios";
 const Navbar = ({mode}) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const API = axios.create({
-    baseURL: 'http://localhost:3000/api/v1/auth/logout',
-  });
+  
 
   
   const handleLogout = async () => {
