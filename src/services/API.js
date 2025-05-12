@@ -33,6 +33,14 @@ export const sendOTP = async (otpCode) =>{
   })
 }
 
+export const createTask = async (name, duration, category, description) =>{
+  return await axios.post(`${API_URL}task/`, {
+    name, duration, category, description
+  },
+  {
+    withCredentials:true
+  })
+}
 export const getUser = async () =>{
   return await axios.get(`${API_URL}`)
 }

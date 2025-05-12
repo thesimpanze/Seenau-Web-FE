@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import EditTask from "./EditTask";
 import PrimaryButton from "./PrimaryButton";
 import BigPrimaryButton from "./BigPrimaryButton";
+import { createTask } from "../services/API";
+
 
 function Task() {
   const [tasks, setTasks] = useState([{ id: 1, title: "Task 1", completed: false, duration: 1 }]);
   const [isEditing, setIsEditing] = useState(null);
   const [editData, setEditData] = useState({ title: "", duration: 1 });
 
-  const handleAddTask = () => {
-    const newId = tasks.length + 1;
-    setTasks([...tasks, { id: newId, title: `Task ${newId}`, completed: false, duration: 1 }]);
+  const handleAddTask = async (e) => {
+    
+    try{
+      let res = await createTask('Task', 60, 'penting', 'belajar')
+      console.log(res.data.message)
+    }
+    catch(err){
+      console.log(err.response?.data?.message || err.message)
+    }
+    
   };
 
   const handleEditTask = (task) => {
@@ -43,7 +52,7 @@ function Task() {
           </div>
           <div className="flex ">
             <div>{`0/${task.duration}`}</div>
-            <button onClick={() => handleEditTask(task)} >
+            <button onClick={handleAddTask} >
               <svg width="25px" height="25px" viewBox="0 0 24 24" fill="#000000" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6C12.5523 6 13 5.55228 13 5Z" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
