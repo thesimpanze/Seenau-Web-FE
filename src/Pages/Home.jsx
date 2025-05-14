@@ -88,7 +88,7 @@ const Home = () => {
       <LandingPage />
       <div className="flex m-auto flex-col items-center">
         <Navbar mode={mode} />
-        <div className="w-[50%] flex flex-col gap-8 mt-9">
+        <div className="w-[50%] flex flex-col gap-8 mt-16">
           <div className="flex justify-evenly p-4">
             <button onClick={() => setMode("pomodoro")} className={`${mode === "pomodoro" ? "font-bold border-b-2" : "font-semibold hover:cursor-pointer"}`}>
               Pomodoro

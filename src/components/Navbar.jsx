@@ -28,7 +28,7 @@ const Navbar = ({mode}) => {
   
 
   return (
-    <nav className="w-full bg-white px-4 py-2 flex justify-between items-center relative">
+    <nav className="w-full bg-white px-4 py-2 flex justify-between items-center  fixed z-10">
       {/* Logo */}
       <div className="flex items-center space-x-1">
         <span className="text-black font-bold text-xl">

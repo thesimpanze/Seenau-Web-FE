@@ -45,4 +45,24 @@ export const getUser = async () =>{
   return await axios.get(`${API_URL}`)
 }
 
+export const getTasks = async () =>{
+  return await axios.get(`${API_URL}task/?limit=10`, {
+    withCredentials:true
+  })
+}
+
+export const deleteTask = async (taskId) =>{
+  return await axios.delete(`${API_URL}task/${taskId}`, {
+    withCredentials:true
+  })
+}
+export const updateTask = async (taskId, name, duration, category, description) =>{
+  return await axios.put(`${API_URL}task/${taskId}`, {
+    name, duration, category, description
+  },
+  {
+    withCredentials:true
+  })
+}
+
 
