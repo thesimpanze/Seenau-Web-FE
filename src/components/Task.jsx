@@ -45,17 +45,13 @@ function Task() {
   const handleSaveTask = async (formData) => {
     try {
       if (isNewTask) {
-        // Add new task
         let res = await createTask(formData.name, formData.duration, formData.category, formData.description);
         console.log(res.message)
         console.log(res.data)
       } else {
-        // Update existing task
         await updateTask(taskId, formData.name, formData.duration, formData.category, formData.description);
       }
-      // Refresh task list
       fetchTasks();
-      // Close edit modal
       handleCloseEditTask();
     } catch (err) {
       console.error("Error saving task:", err.response?.data?.message || err.message);
@@ -71,7 +67,6 @@ function Task() {
       console.error("Error deleting task:", error);
     }
   };
-  console.log(tasks)
   return (
     <div className="w-[40%]  mt-10 relative flex-col flex pb-10">
       <div className="flex justify-between font-bold border-b-2 mb-3">

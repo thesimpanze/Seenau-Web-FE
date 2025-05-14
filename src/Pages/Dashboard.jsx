@@ -5,8 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import EditProfile from "../components/EditProfile";
 
 import axios from "axios";
-
-
+import { getTasks } from "../services/API";
 
 const data = [
   { name: "Mon", focus: 3 },
@@ -23,6 +22,7 @@ const barColors = ["#FACC15", "#000000"];
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [showOtpModal, setShowOtpModal] = useState(false);
+  const [totalTask, setTotalTask] = useState([]);
   const openModal = () => {
     setShowModal(true);
   };
@@ -33,8 +33,22 @@ const Dashboard = () => {
   const closeOtpModal = () => {
     setShowOtpModal(false);
   };
+  useEffect(() => {
+    async function fetchData() {
 
-  
+      try {
+        const response = await getTasks();
+        setTotalTask(response.data.data);
+      }
+      catch (err){
+        console.log('error ambil data', err.response?.data?.message || err.message)
+
+    }
+  }
+    fetchData();  
+
+  },[])
+  console.log(totalTask)
   return (
     <div className="min-h-screen bg-white pb-24 relative">
       <Navbar />
@@ -50,7 +64,7 @@ const Dashboard = () => {
           </div>
         </div>
         <button
-          onClick={openModal} // Memastikan modal terbuka
+          onClick={openModal} 
           className="border border-white px-4 py-2 rounded hover:bg-white hover:text-black transition"
         >
           Edit Profile
@@ -64,8 +78,8 @@ const Dashboard = () => {
           <p className="text-2xl">5h 15m</p>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-          <h2 className="text-lg font-semibold">Task Completed</h2>
-          <p className="text-2xl">10</p>
+          <h2 className="text-lg font-semibold">Total Task</h2>
+          <p className="text-2xl">{totalTask.length}</p>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-lg text-center">
           <h2 className="text-lg font-semibold">Preferred Focus Level</h2>
