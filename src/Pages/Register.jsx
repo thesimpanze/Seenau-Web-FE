@@ -34,8 +34,10 @@ const Register = () => {
     <div className="flex justify-center items-center min-h-screen">
       <form onSubmit={handleRegister} className="px-9 py-5 rounded-sm outline-slate-500 outline-1 shadow-lg flex flex-col justify-center items-center gap-8">
         <div className="font-bold text-2xl text-center">
+          <Link to={"/"}>
           <span className="bg-yellow-300 px-1">See</span>
           <span>nau</span>
+          </Link>
           <h1 className="font-semibold text-2xl">Register</h1>
         </div>
         <div className="flex flex-col gap-1">

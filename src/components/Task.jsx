@@ -54,7 +54,12 @@ function Task() {
       fetchTasks();
       handleCloseEditTask();
     } catch (err) {
-      console.error("Error saving task:", err.response?.data?.message || err.message);
+      console.error("Error saving task:", err.response);
+      if(err.response.status == 401){
+        alert("Session habis, tolong login");
+        window.location.href = "/login";
+      }
+      // alert(err.response?.data?.message || err.message);
     }
   };
 

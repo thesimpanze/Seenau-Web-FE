@@ -48,13 +48,12 @@ const Dashboard = () => {
     fetchData();  
 
   },[])
-  console.log(totalTask)
   return (
     <div className="min-h-screen bg-white pb-24 relative">
       <Navbar />
 
       {/* Header Section */}
-      <section className="bg-black text-white px-6 py-6 flex justify-between items-center">
+      <section className="bg-black text-white px-6 pb-6 pt-14 flex justify-between items-center">
         <div className="flex items-center gap-4">
           <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-2xl font-semibold">Ur</div>
           <div>

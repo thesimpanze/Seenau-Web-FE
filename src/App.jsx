@@ -7,6 +7,7 @@ import Register from "./Pages/Register";
 import TimerMode from "./components/TimerMode";
 import OtpModal from "./Pages/OtpModal";
 import LandingPage from "./components/LandingPage";
+import Testing from "./Pages/Testing";
 
 
 
@@ -20,7 +21,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/timer" element={<TimerMode />} />
         <Route path="/otp" element={<OtpModal />} />
-        <Route path="/test" element={<LandingPage />} />
+        <Route path="/test" element={<Testing />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

@@ -65,4 +65,18 @@ export const updateTask = async (taskId, name, duration, category, description) 
   })
 }
 
+export const createPattern  = async (name, focus_time, break_time, period, description, category)=>{
+  return await axios.post(`${API_URL}pattern`, {
+    name, focus_time, break_time, period, description, category
+  }, {
+    withCredentials:true
+  }) 
+}
+
+export const getPatterns = async () =>{
+  return await axios.get(`${API_URL}pattern`, {
+    withCredentials:true
+  })
+}
+
 

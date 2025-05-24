@@ -13,10 +13,9 @@ const Home = () => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [isModalOpen, setIsModalOpen] = useState(false); v
   const openModal = () => {
-    setIsModalOpen(true)
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
@@ -25,7 +24,7 @@ const Home = () => {
 
   const handleSelectPreset = (focus, breakTime) => {
     const selectedTime = mode === "pomodoro" ? focus : breakTime;
-    setTimeLeft(selectedTime * 60); 
+    setTimeLeft(selectedTime * 60);
     setIsRunning(false);
     clearInterval(intervalRef.current);
     setIsModalOpen(false);
@@ -37,7 +36,7 @@ const Home = () => {
       .then((json) => setData(json))
       .catch((err) => console.error("Error:", err));
   }, []);
-
+  
   const selected = data[2];
   useEffect(() => {
     if (data.length > 0) {
@@ -51,14 +50,22 @@ const Home = () => {
       clearInterval(intervalRef.current);
     }
   }, [mode, data]);
-
   useEffect(() => {
     if (isRunning) {
       intervalRef.current = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev <= 1) {
             clearInterval(intervalRef.current);
-            setIsRunning(false);
+            const nextMode = mode === "pomodoro" ? "short break" : "pomodoro";
+            setMode(nextMode);
+
+            setTimeout(() => {
+              const selected = data[2]; 
+              const nextTime = nextMode === "pomodoro" ? selected.time * 60 : selected.break * 60;
+              setTimeLeft(nextTime);
+              setIsRunning(true);
+            }, 100); 
+
             return 0;
           }
           return prev - 1;
@@ -82,7 +89,6 @@ const Home = () => {
       clearInterval(intervalRef.current);
     }
   };
-
   return (
     <>
       <LandingPage />
