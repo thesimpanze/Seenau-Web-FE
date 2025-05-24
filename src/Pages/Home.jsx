@@ -14,6 +14,8 @@ const Home = () => {
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPreset, setSelectedPreset] = useState({ focus: 0, breakTime: 0 });
+  const [isFromPlay, setIsFromPlay] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -24,6 +26,7 @@ const Home = () => {
 
   const handleSelectPreset = (focus, breakTime) => {
     const selectedTime = mode === "pomodoro" ? focus : breakTime;
+    setSelectedPreset({ focus, breakTime });
     setTimeLeft(selectedTime * 60);
     setIsRunning(false);
     clearInterval(intervalRef.current);
@@ -36,20 +39,18 @@ const Home = () => {
       .then((json) => setData(json))
       .catch((err) => console.error("Error:", err));
   }, []);
-  
+
   const selected = data[2];
   useEffect(() => {
-    if (data.length > 0) {
-      const selected = data[1];
-
-      setTimeLeft(mode === "pomodoro" ? selected.time * 60 : selected.break * 60);
-
-      setTimeLeft(mode === "pomodoro" ? selected.time : selected.break);
-
-      setIsRunning(false);
-      clearInterval(intervalRef.current);
+    if (selectedPreset) {
+      const newTime = mode === "pomodoro" ? selectedPreset.focus : selectedPreset.breakTime;
+      setTimeLeft(newTime * 60);
+      if (!isFromPlay) {
+        setIsRunning(false);
+      }
+      setIsFromPlay(false);
     }
-  }, [mode, data]);
+  }, [mode, selectedPreset]);
   useEffect(() => {
     if (isRunning) {
       intervalRef.current = setInterval(() => {
@@ -60,11 +61,10 @@ const Home = () => {
             setMode(nextMode);
 
             setTimeout(() => {
-              const selected = data[2]; 
-              const nextTime = nextMode === "pomodoro" ? selected.time * 60 : selected.break * 60;
-              setTimeLeft(nextTime);
+              const nextTime = nextMode === "pomodoro" ? selectedPreset.focus : selectedPreset.breakTime;
+              setTimeLeft(nextTime * 60);
               setIsRunning(true);
-            }, 100); 
+            }, 100);
 
             return 0;
           }
@@ -89,6 +89,7 @@ const Home = () => {
       clearInterval(intervalRef.current);
     }
   };
+  console.log(selectedPreset)
   return (
     <>
       <LandingPage />
