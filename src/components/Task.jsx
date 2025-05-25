@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import EditTask from "./EditTask";
 import BigPrimaryButton from "./BigPrimaryButton";
 import { createTask, updateTask, deleteTask, getTasks } from "../services/API";
+import UseAuthCheck from "../services/UseAuthCheck";
+import { Link } from "react-router-dom";
 
 function Task() {
   const [isEditTaskOpen, setIsEditTaskOpen] = useState(false);
@@ -9,7 +11,7 @@ function Task() {
   const [taskId, setTaskId] = useState(null);
   const [editingTask, setEditingTask] = useState(null);
   const [isNewTask, setIsNewTask] = useState(false);
-
+  const isAuth = UseAuthCheck();
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -46,8 +48,8 @@ function Task() {
     try {
       if (isNewTask) {
         let res = await createTask(formData.name, formData.duration, formData.category, formData.description);
-        console.log(res.message)
-        console.log(res.data)
+        console.log(res.message);
+        console.log(res.data);
       } else {
         await updateTask(taskId, formData.name, formData.duration, formData.category, formData.description);
       }
@@ -55,7 +57,7 @@ function Task() {
       handleCloseEditTask();
     } catch (err) {
       console.error("Error saving task:", err.response);
-      if(err.response.status == 401){
+      if (err.response.status == 401) {
         alert("Session habis, tolong login");
         window.location.href = "/login";
       }
@@ -78,8 +80,7 @@ function Task() {
         <h3>Task</h3>
         <h3>Duration</h3>
       </div>
-
-      {tasks.length > 0 ? (
+      {tasks.length && isAuth ? (
         tasks.map((task, index) => (
           <div key={task._id} className="border border-dashed p-3 mb-2 rounded-md flex justify-between items-center">
             <div>
@@ -101,20 +102,18 @@ function Task() {
       ) : (
         <div className="text-center py-4 text-gray-500">No tasks yet</div>
       )}
-
-      
-        <BigPrimaryButton onClick={handleAddTask}>+ Add task</BigPrimaryButton>
-      
-      
-      {isEditTaskOpen && (
-        <EditTask
-          task={editingTask}
-          isNew={isNewTask}
-          onClose={handleCloseEditTask}
-          onSave={handleSaveTask}
-          onDelete={handleDeleteTask}
-        />
+      {isAuth ? (
+        <BigPrimaryButton className="w-full" onClick={handleAddTask}>
+          + Add task
+        </BigPrimaryButton>
+      ) : (
+        <Link to={"/login"}>
+          {" "}
+          <BigPrimaryButton  className="w-full" onClick={handleAddTask}> Login to add task</BigPrimaryButton>
+        </Link>
       )}
+
+      {isEditTaskOpen && <EditTask task={editingTask} isNew={isNewTask} onClose={handleCloseEditTask} onSave={handleSaveTask} onDelete={handleDeleteTask} />}
     </div>
   );
 }

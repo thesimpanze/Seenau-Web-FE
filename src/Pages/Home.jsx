@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
-import BigPrimaryButton from "../components/BigPrimaryButton";
 import Task from "../components/Task";
 import { FiPlay, FiPause, FiRotateCcw } from "react-icons/fi";
 import TimerMode from "../components/TimerMode";
-import { useCookies } from "react-cookie";
 import LandingPage from "../components/LandingPage";
+import UseAuthCheck from "../services/UseAuthCheck";
+
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -16,6 +16,9 @@ const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState({ focus: 0, breakTime: 0 });
   const [isFromPlay, setIsFromPlay] = useState(false);
+  const isAuth = UseAuthCheck();
+  
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -89,12 +92,12 @@ const Home = () => {
       clearInterval(intervalRef.current);
     }
   };
-  console.log(selectedPreset)
+
   return (
     <>
       <LandingPage />
       <div className="flex m-auto flex-col items-center">
-        <Navbar mode={mode} />
+        <Navbar mode={mode}  />
         <div className="w-[50%] flex flex-col gap-8 mt-16">
           <div className="flex justify-evenly p-4">
             <button onClick={() => setMode("pomodoro")} className={`${mode === "pomodoro" ? "font-bold border-b-2" : "font-semibold hover:cursor-pointer"}`}>
@@ -120,7 +123,6 @@ const Home = () => {
         </div>
 
         {isModalOpen && <TimerMode onCancel={closeModal} onSelectPreset={handleSelectPreset} />}
-
         <Task />
       </div>
     </>

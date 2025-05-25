@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
-import { createPattern, getPatterns, getToken } from "../services/API";
-import PrimaryButton from "../components/PrimaryButton";
+import { getToken } from "./API";
+import { use } from "react";
 
-const Testing = () => {
+const UseAuthCheck = () => {
   const [isAuth, setIsAuth] = useState(false);
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const res = await getToken();
+        
         if (res.status === 200) {
           setIsAuth(true);
-          console.log('testing');
         } else {
           setIsAuth(false);
-          console.log('testing failed');
         }
       } catch (err) {
-        console.log(err);
         setIsAuth(false);
       }
     };
@@ -24,4 +22,4 @@ const Testing = () => {
   }, []);
   return isAuth;
 };
-export default Testing;
+export default UseAuthCheck;
