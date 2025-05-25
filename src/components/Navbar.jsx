@@ -8,20 +8,19 @@ import UseAuthCheck from "../services/UseAuthCheck";
 const Navbar = ({ mode }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const isAuth = UseAuthCheck();
+  const isAuth = UseAuthCheck(isAuth => isAuth);
   const handleLogout = async () => {
     try {
-      localStorage.removeItem("token");
+      localStorage.clear()
       await axios.get("http://localhost:3000/api/v1/auth/logout", {
         withCredentials: true,
       });
-    
       navigate("/login");
     } catch (err) {
     
     }
   };
-  console.log(isAuth);
+
 
   return (
     <nav className="w-full bg-white px-4 py-2 flex justify-between items-center  fixed z-10">
@@ -54,7 +53,7 @@ const Navbar = ({ mode }) => {
             <Link to="/dashboard" className="block px-4 py-2 hover:bg-gray-100 transition-all duration-150 cursor-pointer" onClick={() => setMenuOpen(false)}>
               Profile
             </Link>
-            {isAuth ? (
+            {isAuth.isAuth ? (
               <button
                 className="block w-full text-left px-4 py-2 hover:bg-gray-100 transition-all duration-150 cursor-pointer"
                 onClick={() => {

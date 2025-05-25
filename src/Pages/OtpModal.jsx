@@ -4,6 +4,8 @@ import DangerButton from "../components/DangerButton";
 import { generateOTP, sendOTP } from "../services/API";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import AuthModal from "../components/AuthModal";
+import UseAuthCheck from "../services/UseAuthCheck";
 
 
 
@@ -12,6 +14,7 @@ const OtpModal = () => {
   const [isSend, setIsSend] = useState(false)
   const [isCorrect, setIsCorrect] = useState("")
   const navigate= useNavigate()
+  const isAuth = UseAuthCheck()
   const handleSubmit = async(e) => {
     e.preventDefault();
     try{
@@ -29,7 +32,6 @@ const OtpModal = () => {
     
     
   };
-
 const handleOTP = async () => {
   try{
     let res = await generateOTP();
@@ -45,6 +47,7 @@ const handleOTP = async () => {
 
   return (
     <div className="flex items-center justify-center h-screen">
+      {!isAuth.isAuth && <AuthModal />}
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-lg font-bold mb-2 mt-2 text-center"> {isSend ? 'Masukkan Kode OTP' : 'kirim OTP code'}</h2>
         <Link to="/dashboard" className="fixed top-3 left-4 text-3xl" >
