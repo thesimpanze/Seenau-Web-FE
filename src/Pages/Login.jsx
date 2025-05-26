@@ -27,7 +27,7 @@ const Login = () => {
       setIsCorrect(err.response?.data?.message || err.message);
     }
   };
-  if (isAuth.isAuth) {
+if (isAuth.isAuth) {
     return <Navigate to="/" replace={true} />;
   }
   return (

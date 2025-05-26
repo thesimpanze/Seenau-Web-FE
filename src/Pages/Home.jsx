@@ -125,6 +125,8 @@ const Home = () => {
               {formatTime(timeLeft)}
             </div>
           </button>
+          
+          <span className="text-center text-lg font-semibold">Interval: {period}</span>
           <div className="m-auto flex justify-center items-center gap-11 text-3xl ">
             <button onClick={() => setIsRunning((prev) => !prev)} className="cursor-pointer">
               {!isRunning ? <FiPlay title="Start" /> : <FiPause title="Pause" />}

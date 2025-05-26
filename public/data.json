@@ -1,17 +1,17 @@
 [
     {
+        "name": "Baby Step",
+        "time": 20,
+        "break": 10
+    },
+    {
         "name": "Pomodoro",
         "time": 20,
         "break": 10
     },
     {
-        "name": "Custom",
-        "time": 50,
-        "break": 20
-    },
-    {
         "name": "Long time",
-        "time": 30,
-        "break": 15
+        "time": 60,
+        "break": 10
     }
 ]

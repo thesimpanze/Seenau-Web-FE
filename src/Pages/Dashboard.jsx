@@ -60,8 +60,8 @@ const Dashboard = () => {
   
   const formatTime = (seconds) => {
     const min = String(Math.floor(seconds / 60)).padStart(2, "0");
-    const sec = String(seconds % 60).padStart(2, "0");
-    return `${min}M ${sec}S`;
+    const sec = String(Math.floor(seconds % 60)).padStart(2, "0");
+    return `${min}Mnt ${sec}S`;
   };
   
   return (
@@ -101,14 +101,14 @@ const Dashboard = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">Focus Time This Week</h2>
         <div className="w-full h-72 shadow-lg bg-white rounded-lg p-4">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data} barSize={40}>
+            <BarChart data={getPartterns} barSize={40}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis unit="h" domain={[0, 6]} />
+              <XAxis dataKey="focus_time" />
+              <YAxis dataKey="focus_time" domain={[0, 6]} />
               <Tooltip />
               <Bar dataKey="focus">
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={barColors[index % barColors.length]} radius={[0, 0, 0, 0]} />
+                {getPartterns.map((entry, index) => (
+                  <Cell key={`cell-${getPartterns.name}`} fill={barColors[index % barColors.length]} radius={[0, 0, 0, 0]} />
                 ))}
               </Bar>
             </BarChart>
