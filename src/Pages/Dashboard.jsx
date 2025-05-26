@@ -28,6 +28,9 @@ const Dashboard = () => {
   const dataUser = JSON.parse(localStorage.getItem("user"));
   const user = dataUser || {};
   const [getPartterns, setGetPatterns] = useState([]);
+  const [totalFocusTime, setTotalFocusTime] = useState(0);
+  
+  
   const openModal = () => {
     setShowModal(true);
   };
@@ -45,6 +48,8 @@ const Dashboard = () => {
         const res = await getAllPatterns();
         setGetPatterns(res.data.data);
         setTotalTask(response.data.data);
+        setTotalFocusTime(res.data.data.reduce((acc, pattern) => acc + (pattern.focus_time || 0), 0))
+        console.log(res.data.data)
       } catch (err) {
         console.log(err);
       }
@@ -55,7 +60,12 @@ const Dashboard = () => {
   if (!isAuth) {
     return <AuthModal />;
   }
-
+  const formatTime = (seconds) => {
+    const min = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const sec = String(seconds % 60).padStart(2, "0");
+    return `${min}M ${sec}S`;
+  };
+  
   return (
     <div className="min-h-screen bg-white pb-24 relative">
       <Navbar />
@@ -77,7 +87,7 @@ const Dashboard = () => {
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6 py-8 mt-6">
         <div className="bg-white p-6 rounded-lg shadow-lg text-center">
           <h2 className="text-lg font-semibold">Total Focus Time</h2>
-          <p className="text-2xl">5h 15m</p>
+          <p className="text-2xl font-bold">{formatTime(totalFocusTime * 60)}</p>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-lg text-center">
           <h2 className="text-lg font-semibold">Total Task</h2>

@@ -3,6 +3,8 @@ import BigPrimaryButton from "../components/BigPrimaryButton";
 import { useEffect, useState } from "react";
 import { login } from "../services/API";
 import UseAuthCheck from "../services/UseAuthCheck";
+import Particles from "../components/Particles";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +32,10 @@ const Login = () => {
   }
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <form onSubmit={handleLogin} className="px-9 py-5 rounded-sm outline-slate-500 outline-1 shadow-lg flex flex-col justify-center items-center gap-8">
+      <div className="fixed top-0 left-0 w-full h-full ">
+        <Particles particleColors={["#000000", "#000000"]} particleCount={400} particleSpread={10} speed={0.1} particleBaseSize={100} moveParticlesOnHover={true} alphaParticles={false} disableRotation={false} />
+      </div>
+      <form onSubmit={handleLogin} className="px-9 py-5 rounded-sm outline-slate-500 outline-1 shadow-lg flex flex-col justify-center items-center gap-8 bg-white z-50 hover:scale-3d ">
         <div className="font-bold text-2xl text-center">
           <Link to={"/"}>
             <span className="bg-yellow-300 px-1">See</span>
