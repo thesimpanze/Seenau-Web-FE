@@ -22,9 +22,13 @@ export const register = async (email, name, password) => {
   });
 };
 export const getToken = async () => {
-  return await axios.post(`${API_URL}auth/refresh-token`,{}, {
-    withCredentials: true,
-  });
+  return await axios.post(
+    `${API_URL}auth/refresh-token`,
+    {},
+    {
+      withCredentials: true,
+    }
+  );
 };
 export const generateOTP = async () => {
   return await axios.post(
@@ -109,8 +113,12 @@ export const createPattern = async (name, focus_time, break_time, period, descri
   );
 };
 
-export const getPatterns = async () => {
-  return await axios.get(`${API_URL}pattern`, {
-    withCredentials: true,
-  });
+export const getAllPatterns = async () => {
+  return await axios.get(
+    `${API_URL}pattern`,
+    
+    {
+      withCredentials: true,
+    }
+  );
 };

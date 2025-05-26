@@ -33,7 +33,7 @@ const EditProfile = ({ onCancel }) => {
               <input type="email" value={user.email} placeholder="Email" className="border px-3 py-2 rounded" disabled />
 
               <div className="flex gap-4 text-sm">
-                <PrimaryButton>Save Changes</PrimaryButton>
+                <PrimaryButton onClick={onCancel}>Close</PrimaryButton>
                 <Link to="/otp">
                   <SecondaryButton type="button">Verfikasi</SecondaryButton>
                 </Link>

@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import BigPrimaryButton from "../components/BigPrimaryButton";
 import Navbar from "../components/Navbar";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import EditProfile from "../components/EditProfile";
 import axios from "axios";
-import { getTasks } from "../services/API";
+import { getAllPatterns, getTasks } from "../services/API";
 import UseAuthCheck from "../services/UseAuthCheck";
 import AuthModal from "../components/AuthModal";
 
@@ -27,6 +27,7 @@ const Dashboard = () => {
   const { isAuth, loading } = UseAuthCheck();
   const dataUser = JSON.parse(localStorage.getItem("user"));
   const user = dataUser || {};
+  const [getPartterns, setGetPatterns] = useState([]);
   const openModal = () => {
     setShowModal(true);
   };
@@ -41,8 +42,12 @@ const Dashboard = () => {
     async function fetchData() {
       try {
         const response = await getTasks();
+        const res = await getAllPatterns();
+        setGetPatterns(res.data.data);
         setTotalTask(response.data.data);
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     }
     fetchData();
   }, []);
@@ -50,7 +55,7 @@ const Dashboard = () => {
   if (!isAuth) {
     return <AuthModal />;
   }
-  console.log("da", isAuth);
+
   return (
     <div className="min-h-screen bg-white pb-24 relative">
       <Navbar />
@@ -61,7 +66,7 @@ const Dashboard = () => {
           <div>
             <h1 className="text-2xl font-bold">{user.name}</h1>
             <p className="text-sm">{user.email}</p>
-            <span className="text-yellow-400 font-semibold text-sm">Focus Master</span>
+            <span className="text-yellow-400 font-semibold text-sm">{user.isVerified ? "Terverfikasi" : "Belum Terverifikasi"}</span>
           </div>
         </div>
         <button onClick={openModal} className="border border-white px-4 py-2 rounded hover:bg-white hover:text-black transition">
@@ -76,7 +81,7 @@ const Dashboard = () => {
         </div>
         <div className="bg-white p-6 rounded-lg shadow-lg text-center">
           <h2 className="text-lg font-semibold">Total Task</h2>
-          <p className="text-2xl">{totalTask.length}</p>
+          <p className="text-2xl font-bold">{totalTask.length}</p>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-lg text-center">
           <h2 className="text-lg font-semibold">Preferred Focus Level</h2>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createPattern, getPatterns, getToken } from "../services/API";
+import { createPattern, getAllPatterns, getToken } from "../services/API";
 import PrimaryButton from "../components/PrimaryButton";
 
 const Testing = () => {

@@ -22,9 +22,9 @@ const TimerMode = ({ onCancel, onSelectPreset, onShow }) => {
   const handleSave = () => {
     if (selectedIndex !== null && onSelectPreset) {
       const selected = data[selectedIndex];
-      onSelectPreset(selected.time, selected.break);
+      onSelectPreset(selected.time, selected.break, selected.name);
     } else if (onSelectPreset) {
-      onSelectPreset(customFocus, customBreak);
+      onSelectPreset(customFocus, customBreak, 'custom');
     }
   };
   console.log(onCancel)

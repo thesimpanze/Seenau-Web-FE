@@ -5,7 +5,7 @@ import { FiPlay, FiPause, FiRotateCcw } from "react-icons/fi";
 import TimerMode from "../components/TimerMode";
 import LandingPage from "../components/LandingPage";
 import UseAuthCheck from "../services/UseAuthCheck";
-
+import { createPattern } from "../services/API";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -14,10 +14,10 @@ const Home = () => {
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPreset, setSelectedPreset] = useState({ focus: 0, breakTime: 0 });
+  const [selectedPreset, setSelectedPreset] = useState({ focus: 0, breakTime: 0, name: "" });
   const [isFromPlay, setIsFromPlay] = useState(false);
-  const isAuth = UseAuthCheck();
-  
+  const [lastMode, setLastMode] = useState(null);
+  const [period, setPeriod] = useState(0);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -27,23 +27,15 @@ const Home = () => {
     setIsModalOpen(false);
   };
 
-  const handleSelectPreset = (focus, breakTime) => {
+  const handleSelectPreset = (focus, breakTime, presetName) => {
     const selectedTime = mode === "pomodoro" ? focus : breakTime;
-    setSelectedPreset({ focus, breakTime });
+    setSelectedPreset({ focus, breakTime, name: presetName });
     setTimeLeft(selectedTime * 60);
     setIsRunning(false);
     clearInterval(intervalRef.current);
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    fetch("/data.json")
-      .then((res) => res.json())
-      .then((json) => setData(json))
-      .catch((err) => console.error("Error:", err));
-  }, []);
-
-  const selected = data[2];
   useEffect(() => {
     if (selectedPreset) {
       const newTime = mode === "pomodoro" ? selectedPreset.focus : selectedPreset.breakTime;
@@ -63,6 +55,10 @@ const Home = () => {
             const nextMode = mode === "pomodoro" ? "short break" : "pomodoro";
             setMode(nextMode);
 
+            if (mode === "short break" && lastMode === "pomodoro") {
+              setPeriod((prev) => prev + 1);
+            }
+            setLastMode(mode);
             setTimeout(() => {
               const nextTime = nextMode === "pomodoro" ? selectedPreset.focus : selectedPreset.breakTime;
               setTimeLeft(nextTime * 60);
@@ -85,19 +81,36 @@ const Home = () => {
   };
 
   const handleReplay = () => {
-    if (data.length > 0) {
-      const selected = data[2];
-      setTimeLeft(mode === "pomodoro" ? selected.time * 60 : selected.break * 60);
-      setIsRunning(false);
-      clearInterval(intervalRef.current);
+    const name = selectedPreset.name || "default";
+    const focus_time = selectedPreset.focus;
+    const break_time = selectedPreset.breakTime;
+    const periodValue = period;
+    const description = name;
+    const category = "menengah";
+
+    setTimeLeft(mode === "pomodoro" ? selectedPreset.focus * 60 : selectedPreset.breakTime * 60);
+    setIsRunning(false);
+    clearInterval(intervalRef.current);
+    handleSendPattern(name, focus_time, break_time, periodValue, description, category);
+  };
+
+  const handleSendPattern = async (name, focus_time, break_time, period, description, category) => {
+    try {
+      let res = await createPattern(name, focus_time, break_time, period, description, category);
+      console.log(res.data)
+    } catch (err) {
+      console.log(err.response?.data?.message || err.message);
     }
   };
+
+  console.log("selectedPreset", selectedPreset);
+  console.log("period", period);
 
   return (
     <>
       <LandingPage />
       <div className="flex m-auto flex-col items-center">
-        <Navbar mode={mode}  />
+        <Navbar mode={mode} />
         <div className="w-[50%] flex flex-col gap-8 mt-16">
           <div className="flex justify-evenly p-4">
             <button onClick={() => setMode("pomodoro")} className={`${mode === "pomodoro" ? "font-bold border-b-2" : "font-semibold hover:cursor-pointer"}`}>
