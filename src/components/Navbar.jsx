@@ -12,7 +12,7 @@ const Navbar = ({ mode }) => {
   const handleLogout = async () => {
     try {
       localStorage.clear()
-      await axios.get("http://localhost:3000/api/v1/auth/logout", {
+      await axios.get("https://seenau-api.onrender.com/api/v1/auth/logout", {
         withCredentials: true,
       });
       navigate("/login");
