@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/v1/";
+const API_URL = "https://seenau-api.onrender.com/api/v1/";
 export const login = async (email, password) => {
   return await axios.post(
     `${API_URL}auth/login`,
