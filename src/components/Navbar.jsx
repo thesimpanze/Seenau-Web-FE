@@ -8,7 +8,7 @@ import UseAuthCheck from "../services/UseAuthCheck";
 const Navbar = ({ mode }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const isAuth = UseAuthCheck(isAuth => isAuth);
+  const isAuth = UseAuthCheck();
   const handleLogout = async () => {
     try {
       localStorage.clear()
