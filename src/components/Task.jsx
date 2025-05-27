@@ -102,7 +102,7 @@ function Task() {
       ) : (
         <div className="text-center py-4 text-gray-500">No tasks yet</div>
       )}
-      {isAuth.isAuth ? (
+      {isAuth ? (
         <BigPrimaryButton className="w-full" onClick={handleAddTask}>
           + Add task
         </BigPrimaryButton>

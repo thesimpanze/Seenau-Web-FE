@@ -26,6 +26,6 @@ const UseAuthCheck = () => {
     };
     checkAuth();
   }, []);
-  return {isAuth, loading};
+  return {isAuth};
 };
 export default UseAuthCheck;

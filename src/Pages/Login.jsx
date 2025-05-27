@@ -21,7 +21,7 @@ const Login = () => {
       navigate("/");
       // setTimeout(()=>{
       // }, 1000)
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", JSON.stringify(res.data.user));
     } catch (err) {
       console.log(err.response?.data?.message || err.message);
       setIsCorrect(err.response?.data?.message || err.message);
