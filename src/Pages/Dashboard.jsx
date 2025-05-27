@@ -24,7 +24,7 @@ const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [showOtpModal, setShowOtpModal] = useState(false);
   const [totalTask, setTotalTask] = useState([]);
-  const { isAuth, loading } = UseAuthCheck();
+  const { isAuth } = UseAuthCheck();
   const dataUser = JSON.parse(localStorage.getItem("user"));
   const user = dataUser || {};
   const [getPartterns, setGetPatterns] = useState([]);
@@ -49,7 +49,7 @@ const Dashboard = () => {
         setGetPatterns(res.data.data);
         setTotalTask(response.data.data);
         setTotalFocusTime(res.data.data.reduce((acc, pattern) => acc + (pattern.focus_time || 0), 0))
-        console.log(res.data.data)
+        
       } catch (err) {
         console.log(err);
       }
@@ -67,7 +67,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-white pb-24 relative">
       <Navbar />
-      {!isAuth.isAuth && (<AuthModal/>)}
+      {!isAuth && (<AuthModal/>)}
       <section className="bg-black text-white px-6 pb-6 pt-14 flex justify-between items-center">
         <div className="flex items-center gap-4">
           <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-2xl font-semibold">Ur</div>

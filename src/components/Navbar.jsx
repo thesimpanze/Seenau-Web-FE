@@ -17,6 +17,7 @@ const Navbar = ({ mode }) => {
       });
       navigate("/login");
     } catch (err) {
+      console.log(err)
     
     }
   };
@@ -53,7 +54,7 @@ const Navbar = ({ mode }) => {
             <Link to="/dashboard" className="block px-4 py-2 hover:bg-gray-100 transition-all duration-150 cursor-pointer" onClick={() => setMenuOpen(false)}>
               Profile
             </Link>
-            {isAuth ? (
+            {isAuth.isAuth ? (
               <button
                 className="block w-full text-left px-4 py-2 hover:bg-gray-100 transition-all duration-150 cursor-pointer"
                 onClick={() => {

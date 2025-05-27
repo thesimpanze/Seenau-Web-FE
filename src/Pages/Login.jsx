@@ -24,6 +24,7 @@ const Login = () => {
       localStorage.setItem("token", JSON.stringify(res.data.user));
     } catch (err) {
       console.log(err.response?.data?.message || err.message);
+      console.log(err);
       setIsCorrect(err.response?.data?.message || err.message);
     }
   };
@@ -35,7 +36,7 @@ if (isAuth.isAuth) {
       <div className="fixed top-0 left-0 w-full h-full ">
         <Particles particleColors={["#000000", "#000000"]} particleCount={400} particleSpread={8} speed={0.1} particleBaseSize={100} moveParticlesOnHover={true} alphaParticles={false} disableRotation={false} />
       </div>
-      <form onSubmit={handleLogin} className="px-9 py-5 rounded-sm outline-slate-500 outline-1 shadow-lg flex flex-col justify-center items-center gap-8 bg-white z-50 hover:scale-105 transition-all duration-300 ">
+      <form onSubmit={handleLogin} className="md:px-9 px-5 py-5 rounded-sm outline-slate-500 outline-1 shadow-lg flex flex-col justify-center items-center md:gap-8 gap-5 z-50 bg-white hover:scale-105 transition-all duration-300 ">
         <div className="font-bold text-2xl text-center">
           <Link to={"/"}>
             <span className="bg-yellow-300 px-1">See</span>
@@ -51,9 +52,9 @@ if (isAuth.isAuth) {
           <p className={`text-red-500 text-sm ${isCorrect ? "block" : "hidden"}`}>*{isCorrect}</p>
         </div>
         <div className="flex flex-col w-full gap-2 ">
-          <BigPrimaryButton type="submit">Login</BigPrimaryButton>
-          <Link className="text-right" to="/forgot-password">
-            <span className="text-sm text-right">Forget Password?</span>
+          <BigPrimaryButton type="submit">Let me in</BigPrimaryButton>
+          <Link className="text-right" to="/">
+            <span className="text-sm text-right">Back to home</span>
           </Link>
         </div>
         <p className="text-sm">

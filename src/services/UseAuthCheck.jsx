@@ -11,13 +11,9 @@ const UseAuthCheck = () => {
       try {
         const res = await getToken();
 
-        if (res.status === 200) {
-          setIsAuth(true);
-          setData(res.data.user);
-          localStorage.setItem("user", JSON.stringify(res.data.user));
-        } else {
-          setIsAuth(false);
-        }
+        setIsAuth(true);
+        setData(res.data.user);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
       } catch (err) {
         setIsAuth(false);
       } finally {
@@ -26,6 +22,6 @@ const UseAuthCheck = () => {
     };
     checkAuth();
   }, []);
-  return {isAuth};
+  return { isAuth };
 };
 export default UseAuthCheck;

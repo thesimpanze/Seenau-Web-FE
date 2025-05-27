@@ -14,10 +14,9 @@ const EditProfile = ({ onCancel }) => {
   };
 
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/80">
+      <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/80 px-5 md:px-0">
         <div className="bg-white w-full max-w-xl p-8 rounded-lg relative shadow-lg shadow-gray-600">
           <button onClick={onCancel} className="absolute top-3 right-4 text-2xl font-bold">
             ×

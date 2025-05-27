@@ -82,8 +82,8 @@ const Home = () => {
 
   const handleReplay = () => {
     const name = selectedPreset.name || "default";
-    const focus_time = selectedPreset.focus;
-    const break_time = selectedPreset.breakTime;
+    const focus_time = selectedPreset.focus *60;
+    const break_time = selectedPreset.breakTime *60;
     const periodValue = period;
     const description = name;
     const category = "menengah";
@@ -103,16 +103,14 @@ const Home = () => {
     }
   };
 
-  console.log("selectedPreset", selectedPreset);
-  console.log("period", period);
-
+  
   return (
     <>
       <LandingPage />
       <div className="flex m-auto flex-col items-center">
         <Navbar mode={mode} />
         <div className="w-[50%] flex flex-col gap-8 mt-16">
-          <div className="flex justify-evenly p-4">
+          <div className="flex md:justify-evenly justify-between p-4 md:text-base text-sm md:gap-8 gap-4">
             <button onClick={() => setMode("pomodoro")} className={`${mode === "pomodoro" ? "font-bold border-b-2" : "font-semibold hover:cursor-pointer"}`}>
               Pomodoro
             </button>
@@ -128,7 +126,7 @@ const Home = () => {
           
           <span className="text-center text-lg font-semibold">Interval: {period}</span>
           <div className="m-auto flex justify-center items-center gap-11 text-3xl ">
-            <button onClick={() => setIsRunning((prev) => !prev)} className="cursor-pointer">
+            <button onClick={() => setIsRunning((prev) => !prev)} className="cursor-pointer" disabled={selectedPreset.focus === 0 || !selectedPreset.breakTime === 0} >
               {!isRunning ? <FiPlay title="Start" /> : <FiPause title="Pause" />}
             </button>
             <button onClick={handleReplay} className="text-black hover:text-gray-700" title="Replay">
