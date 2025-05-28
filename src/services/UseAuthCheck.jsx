@@ -18,9 +18,11 @@ const UseAuthCheck = () => {
         } else {
           throw new Error("User data not found");
         }
+        console.log(res)
       } catch (err) {
         setIsAuth(false);
         setLoading(false);
+        console.log(err)
       } finally {
       }
     };
