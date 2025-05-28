@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const API_URL = "https://seenau-api.onrender.com/api/v1/";
-const API_URL = "http://localhost:3000/api/v1/";
+const API_URL = "https://seenau-api.onrender.com/api/v1/";
+// const API_URL = "http://localhost:3000/api/v1/";
 
 // Create axios instance with default config
 const api = axios.create({
