@@ -18,6 +18,7 @@ const Home = () => {
   const [isFromPlay, setIsFromPlay] = useState(false);
   const [lastMode, setLastMode] = useState(null);
   const [period, setPeriod] = useState(0);
+  const { isAuth, loading } = UseAuthCheck();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -102,11 +103,10 @@ const Home = () => {
       console.log(err.response?.data?.message || err.message);
     }
   };
-
   
   return (
     <>
-      <LandingPage />
+      {!isAuth && <LandingPage />}
       <div className="flex m-auto flex-col items-center">
         <Navbar mode={mode} />
         <div className="w-[50%] flex flex-col gap-8 mt-16">

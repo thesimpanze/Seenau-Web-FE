@@ -16,12 +16,11 @@ const UseAuthCheck = () => {
         localStorage.setItem("user", JSON.stringify(res.data.user));
       } catch (err) {
         setIsAuth(false);
-      } finally {
         setLoading(false);
-      }
+      } 
     };
     checkAuth();
   }, []);
-  return { isAuth };
+  return { isAuth, loading };
 };
 export default UseAuthCheck;

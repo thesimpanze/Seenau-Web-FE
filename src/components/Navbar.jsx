@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UseAuthCheck from "../services/UseAuthCheck";
+import { logout } from "../services/API";
 
 
 const Navbar = ({ mode }) => {
@@ -12,9 +13,7 @@ const Navbar = ({ mode }) => {
   const handleLogout = async () => {
     try {
       localStorage.clear()
-      await axios.get("https://seenau-api.onrender.com/api/v1/auth/logout", {
-        withCredentials: true,
-      });
+      let res = await logout();
       navigate("/login");
     } catch (err) {
       console.log(err)

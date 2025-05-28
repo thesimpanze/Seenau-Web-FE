@@ -7,6 +7,7 @@ import axios from "axios";
 import { getAllPatterns, getTasks } from "../services/API";
 import UseAuthCheck from "../services/UseAuthCheck";
 import AuthModal from "../components/AuthModal";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const data = [
   { name: "Mon", focus: 3 },
@@ -24,13 +25,12 @@ const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [showOtpModal, setShowOtpModal] = useState(false);
   const [totalTask, setTotalTask] = useState([]);
-  const { isAuth } = UseAuthCheck();
+  const { isAuth, loading } = UseAuthCheck();
   const dataUser = JSON.parse(localStorage.getItem("user"));
   const user = dataUser || {};
   const [getPartterns, setGetPatterns] = useState([]);
   const [totalFocusTime, setTotalFocusTime] = useState(0);
-  
-  
+
   const openModal = () => {
     setShowModal(true);
   };
@@ -48,8 +48,7 @@ const Dashboard = () => {
         const res = await getAllPatterns();
         setGetPatterns(res.data.data);
         setTotalTask(response.data.data);
-        setTotalFocusTime(res.data.data.reduce((acc, pattern) => acc + (pattern.focus_time || 0), 0))
-        
+        setTotalFocusTime(res.data.data.reduce((acc, pattern) => acc + (pattern.focus_time || 0), 0));
       } catch (err) {
         console.log(err);
       }
@@ -57,17 +56,36 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  
   const formatTime = (seconds) => {
     const min = String(Math.floor(seconds / 60)).padStart(2, "0");
     const sec = String(Math.floor(seconds % 60)).padStart(2, "0");
     return `${min}Mnt ${sec}S`;
   };
-  
+  if (loading) {
+    setInterval(() => {
+      return (
+        <div className="flex items-center justify-center min-h-screen bg-white">
+          <LoadingSpinner />;
+        </div>
+      );
+    }, 1000);
+  }
+  if (!loading && !isAuth) {
+    return <AuthModal />;
+  }
+  const chartData =
+    getPartterns.length > 0
+      ? getPartterns.map((pattern, index) => ({
+          name: pattern.name || `Day ${index + 1}`,
+          focus: pattern.focus_time || 0,
+          focus_time: pattern.focus_time || 0,
+        }))
+      : data;
+
   return (
     <div className="min-h-screen bg-white pb-24 relative">
+      {!isAuth || !loading ? <AuthModal /> : null}
       <Navbar />
-      {!isAuth && (<AuthModal/>)}
       <section className="bg-black text-white px-6 pb-6 pt-14 flex justify-between items-center">
         <div className="flex items-center gap-4">
           <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-2xl font-semibold">Ur</div>
@@ -101,14 +119,14 @@ const Dashboard = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">Focus Time This Week</h2>
         <div className="w-full h-72 shadow-lg bg-white rounded-lg p-4">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={getPartterns} barSize={40}>
+            <BarChart data={chartData} barSize={40}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="focus_time" />
-              <YAxis dataKey="focus_time" domain={[0, 6]} />
+              <XAxis dataKey="name" />
+              <YAxis domain={[0, "dataMax + 1"]} />
               <Tooltip />
               <Bar dataKey="focus">
-                {getPartterns.map((entry, index) => (
-                  <Cell key={`cell-${getPartterns.name}`} fill={barColors[index % barColors.length]} radius={[0, 0, 0, 0]} />
+                {chartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={barColors[index % barColors.length]} />
                 ))}
               </Bar>
             </BarChart>

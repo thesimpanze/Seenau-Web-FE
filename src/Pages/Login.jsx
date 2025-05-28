@@ -19,8 +19,9 @@ const Login = () => {
       console.log("berhasil masuk", res.message);
       setIsCorrect("Berhasil Masuk");
       navigate("/");
-      // setTimeout(()=>{
-      // }, 1000)
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
       localStorage.setItem("token", JSON.stringify(res.data.user));
     } catch (err) {
       console.log(err.response?.data?.message || err.message);
@@ -28,7 +29,7 @@ const Login = () => {
       setIsCorrect(err.response?.data?.message || err.message);
     }
   };
-if (isAuth.isAuth) {
+  if (isAuth.isAuth) {
     return <Navigate to="/" replace={true} />;
   }
   return (

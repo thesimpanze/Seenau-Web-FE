@@ -1,124 +1,157 @@
 import axios from "axios";
 
-const API_URL = "https://seenau-api.onrender.com/api/v1/";
-export const login = async (email, password) => {
-  return await axios.post(
-    `${API_URL}auth/login`,
-    {
-      email,
-      password,
-    },
-    {
-      withCredentials: true,
+// const API_URL = "https://seenau-api.onrender.com/api/v1/";
+const API_URL = "http://localhost:3000/api/v1/";
+
+// Create axios instance with default config
+const api = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+},{});
+
+// Add a request interceptor
+api.interceptors.request.use(
+  (config) => {
+    // You can add loading state here
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Add a response interceptor
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+
+    // If the error status is 401 and there is no originalRequest._retry flag,
+    // it means the token has expired and we need to refresh it
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        await getToken();
+        return api(originalRequest);
+      } catch (refreshError) {
+        // If refresh token fails, redirect to login
+        window.location.href = "/login";
+        return Promise.reject(refreshError);
+      }
     }
-  );
+    return Promise.reject(error);
+  }
+);
+
+export const login = async (email, password) => {
+  try {
+    return await api.post("auth/login", { email, password });
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Login failed");
+  }
 };
+export const logout = async () => {
+  try {
+    return await api.get("auth/logout", { withCredentials: true });
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Logout failed");
+  }
+}
 
 export const register = async (email, name, password) => {
-  return await axios.post(`${API_URL}auth/register`, {
-    email,
-    name,
-    password,
-  });
+  try {
+    return await api.post("auth/register", { email, name, password });
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Registration failed");
+  }
 };
+
 export const getToken = async () => {
-  return await axios.post(
-    `${API_URL}auth/refresh-token`,
-    {},
-    {
-      withCredentials: true,
-    }
-  );
+  try {
+    return await api.post("auth/refresh-token", {}, {withCredentials:true});
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Token refresh failed");
+  }
 };
+
 export const generateOTP = async () => {
-  return await axios.post(
-    `${API_URL}auth/generate-otp-code`,
-    {},
-    {
-      withCredentials: true,
-    }
-  );
+  try {
+    return await api.post("auth/generate-otp-code");
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "OTP generation failed");
+  }
 };
 
 export const sendOTP = async (otpCode) => {
-  return await axios.post(
-    `${API_URL}auth/verifikasi-account`,
-    {
-      otpCode,
-    },
-    {
-      withCredentials: true,
-    }
-  );
+  try {
+    return await api.post("auth/verifikasi-account", { otpCode });
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "OTP verification failed");
+  }
 };
 
 export const createTask = async (name, duration, category, description) => {
-  return await axios.post(
-    `${API_URL}task/`,
-    {
-      name,
-      duration,
-      category,
-      description,
-    },
-    {
-      withCredentials: true,
-    }
-  );
+  try {
+    return await api.post("task/", { name, duration, category, description });
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to create task");
+  }
 };
+
 export const getUser = async () => {
-  return await axios.get(`${API_URL}`);
+  try {
+    return await api.get("");
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to get user data");
+  }
 };
 
 export const getTasks = async () => {
-  return await axios.get(`${API_URL}task/?limit=10`, {
-    withCredentials: true,
-  });
+  try {
+    return await api.get("task/?limit=10");
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to fetch tasks");
+  }
 };
 
 export const deleteTask = async (taskId) => {
-  return await axios.delete(`${API_URL}task/${taskId}`, {
-    withCredentials: true,
-  });
+  try {
+    return await api.delete(`task/${taskId}`);
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to delete task");
+  }
 };
+
 export const updateTask = async (taskId, name, duration, category, description) => {
-  return await axios.put(
-    `${API_URL}task/${taskId}`,
-    {
-      name,
-      duration,
-      category,
-      description,
-    },
-    {
-      withCredentials: true,
-    }
-  );
+  try {
+    return await api.put(`task/${taskId}`, { name, duration, category, description });
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to update task");
+  }
 };
 
 export const createPattern = async (name, focus_time, break_time, period, description, category) => {
-  return await axios.post(
-    `${API_URL}pattern`,
-    {
+  try {
+    return await api.post("pattern", {
       name,
       focus_time,
       break_time,
       period,
       description,
       category,
-    },
-    {
-      withCredentials: true,
-    }
-  );
+    });
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to create pattern");
+  }
 };
 
 export const getAllPatterns = async () => {
-  return await axios.get(
-    `${API_URL}pattern`,
-    
-    {
-      withCredentials: true,
-    }
-  );
+  try {
+    return await api.get("pattern?limit=50");
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to fetch patterns");
+  }
 };
