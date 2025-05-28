@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getToken } from "./API";
-import { use } from "react";
 
 const UseAuthCheck = () => {
   const [isAuth, setIsAuth] = useState(false);
@@ -9,15 +8,21 @@ const UseAuthCheck = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await getToken();
+        const res = await axios.post("https://seenau-api.onrender.com/api/v1/auth/refresh-token", {}, { withCredentials: true });
 
-        setIsAuth(true);
-        setData(res.data.user);
-        localStorage.setItem("user", JSON.stringify(res.data.user));
+        const user = res.data?.user;
+        if (user) {
+          setIsAuth(true);
+          setData(user);
+          localStorage.setItem("user", JSON.stringify(user));
+        } else {
+          throw new Error("User data not found");
+        }
       } catch (err) {
         setIsAuth(false);
         setLoading(false);
-      } 
+      } finally {
+      }
     };
     checkAuth();
   }, []);
