@@ -73,7 +73,7 @@ function Task() {
       console.error("Error deleting task:", error);
     }
   };
-  console.log(isAuth)
+  console.log(isAuth.isAuth)
   return (
     <div className="md:w-[40%] w-[70%]  mt-10 relative flex-col flex pb-10">
       <div className="flex justify-between font-bold border-b-2 mb-3">
@@ -102,7 +102,7 @@ function Task() {
       ) : (
         <div className="text-center py-4 text-gray-500">No tasks yet</div>
       )}
-      {isAuth ? (
+      {isAuth.isAuth ? (
         <BigPrimaryButton className="w-full" onClick={handleAddTask}>
           + Add task
         </BigPrimaryButton>
