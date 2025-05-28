@@ -19,9 +19,6 @@ const Login = () => {
       console.log("berhasil masuk", res.message);
       setIsCorrect("Berhasil Masuk");
       navigate("/");
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
       localStorage.setItem("token", JSON.stringify(res.data.user));
     } catch (err) {
       console.log(err.response?.data?.message || err.message);
