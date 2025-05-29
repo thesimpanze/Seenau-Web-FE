@@ -28,10 +28,10 @@ const Navbar = ({ mode }) => {
       {/* Logo */}
       <div className="flex items-center space-x-1">
         <span className="text-black font-bold text-xl">
-          <Button onClick={handleHome} className="flex items-center gap-1">
+          <button onClick={handleHome} className="flex items-center gap-1">
             <span className="bg-yellow-300 px-1">See</span>
             <span className="text-black">nau</span>
-          </Button>
+          </button>
         </span>
       </div>
 
