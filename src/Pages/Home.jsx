@@ -83,8 +83,8 @@ const Home = () => {
 
   const handleReplay = () => {
     const name = selectedPreset.name || "default";
-    const focus_time = selectedPreset.focus *60;
-    const break_time = selectedPreset.breakTime *60;
+    const focus_time = selectedPreset.focus;
+    const break_time = selectedPreset.breakTime;
     const periodValue = period;
     const description = name;
     const category = "menengah";
