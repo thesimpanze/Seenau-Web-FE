@@ -61,7 +61,7 @@ const Dashboard = () => {
     const sec = String(Math.floor(seconds % 60)).padStart(2, "0");
     return `${min}Mnt ${sec}S`;
   };
-  if (loading) {
+  if (loading && dataUser) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-white">
         <LoadingSpinner />;
@@ -76,10 +76,9 @@ const Dashboard = () => {
           focus_time: pattern.focus_time || 0,
         }))
       : data;
-
   return (
     <div className="min-h-screen bg-white pb-24 relative">
-      {!isAuth ? <AuthModal /> : null}
+      {dataUser === null ? <AuthModal /> : null}
       <Navbar />
       <section className="bg-black text-white px-6 pb-6 pt-14 flex justify-between items-center">
         <div className="flex items-center gap-4">
