@@ -36,7 +36,7 @@ const Register = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center min-h-screen md:px-0 px-6">
       <div className="fixed top-0 left-0 w-full h-full ">
         <Particles particleColors={["#000000", "#000000"]} particleCount={400} particleSpread={10} speed={0.1} particleBaseSize={100} moveParticlesOnHover={true} alphaParticles={false} disableRotation={false} />
       </div>

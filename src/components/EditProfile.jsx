@@ -34,7 +34,7 @@ const EditProfile = ({ onCancel }) => {
               <div className="flex gap-4 text-sm">
                 <PrimaryButton onClick={onCancel}>Close</PrimaryButton>
                 <Link to="/otp">
-                  <SecondaryButton type="button">Verfikasi</SecondaryButton>
+                  <SecondaryButton type="button" disabled={user.isVerified}>Verfikasi</SecondaryButton>
                 </Link>
               </div>
             </form>
