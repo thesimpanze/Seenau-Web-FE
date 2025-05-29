@@ -62,16 +62,11 @@ const Dashboard = () => {
     return `${min}Mnt ${sec}S`;
   };
   if (loading) {
-    setInterval(() => {
-      return (
-        <div className="flex items-center justify-center min-h-screen bg-white">
-          <LoadingSpinner />;
-        </div>
-      );
-    }, 1000);
-  }
-  if (!loading && !isAuth) {
-    return <AuthModal />;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-white">
+        <LoadingSpinner />;
+      </div>
+    );
   }
   const chartData =
     getPartterns.length > 0
@@ -84,7 +79,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-white pb-24 relative">
-      {!isAuth || !loading ? <AuthModal /> : null}
+      {!isAuth ? <AuthModal /> : null}
       <Navbar />
       <section className="bg-black text-white px-6 pb-6 pt-14 flex justify-between items-center">
         <div className="flex items-center gap-4">
