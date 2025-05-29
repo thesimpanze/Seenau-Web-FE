@@ -5,32 +5,33 @@ import axios from "axios";
 import UseAuthCheck from "../services/UseAuthCheck";
 import { logout } from "../services/API";
 
-
 const Navbar = ({ mode }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const isAuth = UseAuthCheck();
   const handleLogout = async () => {
     try {
-      localStorage.clear()
+      localStorage.clear();
       let res = await logout();
       navigate("/login");
     } catch (err) {
-      console.log(err)
-    
+      console.log(err);
     }
   };
-
+  const handleHome = () =>{
+    setMenuOpen(false);
+    navigate("/");
+  }
 
   return (
     <nav className="w-full bg-white px-4 py-2 flex justify-between items-center  fixed z-10">
       {/* Logo */}
       <div className="flex items-center space-x-1">
         <span className="text-black font-bold text-xl">
-          <Link to="/">
+          <Button onClick={handleHome} className="flex items-center gap-1">
             <span className="bg-yellow-300 px-1">See</span>
             <span className="text-black">nau</span>
-          </Link>
+          </Button>
         </span>
       </div>
 
