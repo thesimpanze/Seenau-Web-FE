@@ -23,7 +23,7 @@ const UseAuthCheck = () => {
         console.log(res)
       } catch (err) {
         setIsAuth(false);
-        setLoading(true)
+        setLoading(false)
         console.log(err)
       } finally {
         setLoading(false);
