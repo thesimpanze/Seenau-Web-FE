@@ -2,7 +2,6 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import BigPrimaryButton from "../components/BigPrimaryButton";
 import { useEffect, useState } from "react";
 import { login } from "../services/API";
-import UseAuthCheck from "../services/UseAuthCheck";
 import Particles from "../components/Particles";
 
 const Login = () => {
@@ -10,10 +9,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isCorrect, setIsCorrect] = useState("");
   const navigate = useNavigate();
-  const isAuth = UseAuthCheck();
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       let res = await login(email, password);
       console.log("berhasil masuk", res.message);

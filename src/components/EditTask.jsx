@@ -90,7 +90,7 @@ const EditTask = ({ task, isNew, onClose, onSave, onDelete }) => {
             <label className="block mb-1 font-medium">Category:</label>
             <input type="text"
               name="category"
-              value={formData.category}
+              value={'penting'}
               onChange={handleChange}
               className="w-full border border-gray-300 p-2 rounded" disabled
             />

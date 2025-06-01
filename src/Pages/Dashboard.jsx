@@ -61,13 +61,6 @@ const Dashboard = () => {
     const sec = String(Math.floor(seconds % 60)).padStart(2, "0");
     return `${min}Mnt ${sec}S`;
   };
-  if (loading && dataUser) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-white">
-        <LoadingSpinner />;
-      </div>
-    );
-  }
   const chartData =
     getPartterns.length > 0
       ? getPartterns.map((pattern, index) => ({

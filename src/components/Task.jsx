@@ -41,8 +41,9 @@ function Task() {
 
   const handleCloseEditTask = () => {
     setIsEditTaskOpen(false);
-    setEditingTask(null);
+    setEditingTask(null); 
   };
+  
   const handleSaveTask = async (formData) => {
     try {
       if (isNewTask) {
@@ -79,7 +80,7 @@ function Task() {
         <h3>Task</h3>
         <h3>Duration</h3>
       </div>
-      {tasks.length ? (
+      {tasks.length !== null ? (
         tasks.map((task, index) => (
           <div key={task._id} className="border border-dashed p-3 mb-2 rounded-md flex justify-between items-center">
             <div>
