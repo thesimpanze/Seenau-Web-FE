@@ -4,7 +4,6 @@ import Task from "../components/Task";
 import { FiPlay, FiPause, FiRotateCcw } from "react-icons/fi";
 import TimerMode from "../components/TimerMode";
 import LandingPage from "../components/LandingPage";
-import UseAuthCheck from "../services/UseAuthCheck";
 import { createPattern } from "../services/API";
 
 const Home = () => {

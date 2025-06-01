@@ -3,7 +3,7 @@ import BigPrimaryButton from "../components/BigPrimaryButton";
 import axios from "axios";
 import { useState } from "react";
 import { register } from "../services/API";
-import UseAuthCheck from "../services/UseAuthCheck";
+
 import Particles from "../components/Particles";
 
 
@@ -13,8 +13,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [isCorrect, setIsCorrect] = useState("");
   const navigate = useNavigate();
-  const isAuth = UseAuthCheck();
-  if (isAuth.isAuth) {
+  const user = JSON.parse(localStorage.getItem("token"))
+  if (user) {
     return <Navigate to="/" replace={true} />;
   }
   const handleRegister = async (e) => {

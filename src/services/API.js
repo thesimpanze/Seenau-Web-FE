@@ -69,13 +69,6 @@ export const register = async (email, name, password) => {
   }
 };
 
-export const getToken = async () => {
-  try {
-    return await api.post("auth/refresh-token", {}, {withCredentials:true});
-  } catch (error) {
-    throw new Error(error.response?.data?.message || "Token refresh failed");
-  }
-};
 
 export const generateOTP = async () => {
   try {
