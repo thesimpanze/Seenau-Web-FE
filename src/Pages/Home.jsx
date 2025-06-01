@@ -18,7 +18,6 @@ const Home = () => {
   const [isFromPlay, setIsFromPlay] = useState(false);
   const [lastMode, setLastMode] = useState(null);
   const [period, setPeriod] = useState(0);
-  const { isAuth, loading } = UseAuthCheck();
 
   const openModal = () => {
     setIsModalOpen(true);

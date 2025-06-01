@@ -92,7 +92,7 @@ const EditTask = ({ task, isNew, onClose, onSave, onDelete }) => {
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="w-full border border-gray-300 p-2 rounded"
+              className="w-full border border-gray-300 p-2 rounded" disabled
             />
              
             
