@@ -8,7 +8,6 @@ import { logout } from "../services/API";
 const Navbar = ({ mode }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const isAuth = UseAuthCheck();
   const handleLogout = async () => {
     try {
       localStorage.clear();
@@ -54,7 +53,7 @@ const Navbar = ({ mode }) => {
             <Link to="/dashboard" className="block px-4 py-2 hover:bg-gray-100 transition-all duration-150 cursor-pointer" onClick={() => setMenuOpen(false)}>
               Profile
             </Link>
-            {isAuth.isAuth ? (
+            {user !== null ? (
               <button
                 className="block w-full text-left px-4 py-2 hover:bg-gray-100 transition-all duration-150 cursor-pointer"
                 onClick={() => {

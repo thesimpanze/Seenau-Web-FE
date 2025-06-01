@@ -12,6 +12,7 @@ function Task() {
   const [editingTask, setEditingTask] = useState(null);
   const [isNewTask, setIsNewTask] = useState(false);
   const {isAuth, loading} = UseAuthCheck();
+  const user = JSON.parse(localStorage.getItem("token"))
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -59,8 +60,7 @@ function Task() {
       if (err.response.status == 401) {
         alert("Session habis, tolong login");
         window.location.href = "/login";
-      }
-      // alert(err.response?.data?.message || err.message);
+    }
     }
   };
 
@@ -80,7 +80,7 @@ function Task() {
         <h3>Task</h3>
         <h3>Duration</h3>
       </div>
-      {tasks.length && isAuth ? (
+      {tasks.length && (user !== null) ? (
         tasks.map((task, index) => (
           <div key={task._id} className="border border-dashed p-3 mb-2 rounded-md flex justify-between items-center">
             <div>
@@ -102,7 +102,7 @@ function Task() {
       ) : (
         <div className="text-center py-4 text-gray-500">No tasks yet</div>
       )}
-      {isAuth ? (
+      {user !== null ? (
         <BigPrimaryButton className="w-full" onClick={handleAddTask}>
           + Add task
         </BigPrimaryButton>
