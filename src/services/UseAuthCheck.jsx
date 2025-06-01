@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { getToken } from "./API";
 import axios from "axios";
 
 const UseAuthCheck = () => {
