@@ -16,7 +16,7 @@ const EditTask = ({ task, isNew, onClose, onSave, onDelete }) => {
       setFormData({
         name: task.name || task.title || "",
         duration: task.duration || "",
-        category: task.category || "pemula", // Default value
+        category: task.category || "penting", // Default value
         description: task.description || ""
       });
     }
