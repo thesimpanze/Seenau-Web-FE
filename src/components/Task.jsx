@@ -57,7 +57,10 @@ function Task() {
       handleCloseEditTask();
     } catch (err) {
       console.error("Error saving task:", err.response);
-     
+      if (err.response.status == 401) {
+        alert("Session habis, tolong login");
+        window.location.href = "/login";
+    }
     }
   };
 

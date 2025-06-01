@@ -19,7 +19,6 @@ const Login = () => {
       navigate("/");
       localStorage.setItem("token", JSON.stringify(res.data.user));
     } catch (err) {
-      console.log(err.response?.data?.message || err.message);
       console.log(err);
       setIsCorrect(err.response?.data?.message || err.message);
     }
