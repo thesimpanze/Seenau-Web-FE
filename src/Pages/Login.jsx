@@ -19,7 +19,7 @@ const Login = () => {
       let res = await login(email, password);
       console.log("berhasil masuk", res.message);
       setIsCorrect("Berhasil Masuk");
-      UseAuthCheck()
+      
       navigate("/");
       localStorage.setItem("token", JSON.stringify(res.data.user));
     } catch (err) {
@@ -30,6 +30,7 @@ const Login = () => {
   if (user !== null) {
     return <Navigate to="/" replace={true} />;
   }
+  UseAuthCheck()
   return (
     <div className="flex justify-center items-center min-h-screen bg-white md:px-0 px-6">
       <div className="fixed top-0 left-0 w-full h-full ">
