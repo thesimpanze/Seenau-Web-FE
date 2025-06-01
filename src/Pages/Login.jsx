@@ -3,6 +3,8 @@ import BigPrimaryButton from "../components/BigPrimaryButton";
 import { useEffect, useState } from "react";
 import { login } from "../services/API";
 import Particles from "../components/Particles";
+import UseAuthCheck from "../services/UseAuthCheck";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,12 +12,14 @@ const Login = () => {
   const [isCorrect, setIsCorrect] = useState("");
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("token"))
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       let res = await login(email, password);
       console.log("berhasil masuk", res.message);
       setIsCorrect("Berhasil Masuk");
+      UseAuthCheck()
       navigate("/");
       localStorage.setItem("token", JSON.stringify(res.data.user));
     } catch (err) {
