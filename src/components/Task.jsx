@@ -47,7 +47,7 @@ function Task() {
   const handleSaveTask = async (formData) => {
     try {
       if (isNewTask) {
-        let res = await createTask(formData.name, formData.duration, formData.category, formData.description);
+        let res = await createTask(formData.name, formData.duration, 'penting', formData.description);
         console.log(res.message);
         console.log(res.data);
       } else {
