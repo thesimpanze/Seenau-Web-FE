@@ -38,7 +38,6 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch (refreshError) {
         // If refresh token fails, redirect to login
-        window.location.href = "/login";
         return Promise.reject(refreshError);
       }
     }
