@@ -8,6 +8,7 @@ import { logout } from "../services/API";
 const Navbar = ({ mode }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("token"))
   const handleLogout = async () => {
     try {
       localStorage.clear();
