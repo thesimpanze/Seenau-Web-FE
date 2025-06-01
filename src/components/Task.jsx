@@ -14,8 +14,9 @@ function Task() {
   const user = JSON.parse(localStorage.getItem("token"))
   useEffect(() => {
     fetchTasks();
+    
   }, []);
-
+  UseAuthCheck()
   const fetchTasks = async () => {
     try {
       const response = await getTasks();

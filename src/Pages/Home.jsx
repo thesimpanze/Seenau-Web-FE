@@ -5,6 +5,7 @@ import { FiPlay, FiPause, FiRotateCcw } from "react-icons/fi";
 import TimerMode from "../components/TimerMode";
 import LandingPage from "../components/LandingPage";
 import { createPattern } from "../services/API";
+import UseAuthCheck from "../services/UseAuthCheck";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -34,7 +35,7 @@ const Home = () => {
     clearInterval(intervalRef.current);
     setIsModalOpen(false);
   };
-
+  UseAuthCheck()
   useEffect(() => {
     if (selectedPreset) {
       const newTime = mode === "pomodoro" ? selectedPreset.focus : selectedPreset.breakTime;

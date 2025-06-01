@@ -3,11 +3,11 @@ import BigPrimaryButton from "../components/BigPrimaryButton";
 import Navbar from "../components/Navbar";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import EditProfile from "../components/EditProfile";
-import axios from "axios";
 import { getAllPatterns, getTasks } from "../services/API";
 import UseAuthCheck from "../services/UseAuthCheck";
 import AuthModal from "../components/AuthModal";
 import LoadingSpinner from "../components/LoadingSpinner";
+
 
 const data = [
   { name: "Mon", focus: 3 },
@@ -34,7 +34,7 @@ const Dashboard = () => {
   const openModal = () => {
     setShowModal(true);
   };
-
+  UseAuthCheck()
   const closeModal = () => {
     setShowModal(false);
   };
