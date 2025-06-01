@@ -9,6 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isCorrect, setIsCorrect] = useState("");
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("token"))
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -23,7 +24,7 @@ const Login = () => {
       setIsCorrect(err.response?.data?.message || err.message);
     }
   };
-  if (isAuth.isAuth) {
+  if (user !== null) {
     return <Navigate to="/" replace={true} />;
   }
   return (
