@@ -97,15 +97,15 @@ const Home = () => {
   const handleSendPattern = async (name, focus_time, break_time, period, description, category) => {
     try {
       let res = await createPattern(name, focus_time, break_time, period, description, category);
-      console.log(res.data)
+      console.log(res.data);
     } catch (err) {
       console.log(err.response?.data?.message || err.message);
     }
   };
-  
+
   return (
     <>
-      {!isAuth && <LandingPage />}
+      <LandingPage />
       <div className="flex m-auto flex-col items-center">
         <Navbar mode={mode} />
         <div className="w-[50%] flex flex-col gap-8 mt-16">
@@ -122,10 +122,10 @@ const Home = () => {
               {formatTime(timeLeft)}
             </div>
           </button>
-          
+
           <span className="text-center text-lg font-semibold">Interval: {period}</span>
           <div className="m-auto flex justify-center items-center gap-11 text-3xl ">
-            <button onClick={() => setIsRunning((prev) => !prev)} className="cursor-pointer" disabled={selectedPreset.focus === 0 || !selectedPreset.breakTime === 0} >
+            <button onClick={() => setIsRunning((prev) => !prev)} className="cursor-pointer" disabled={selectedPreset.focus === 0 || !selectedPreset.breakTime === 0}>
               {!isRunning ? <FiPlay title="Start" /> : <FiPause title="Pause" />}
             </button>
             <button onClick={handleReplay} className="text-black hover:text-gray-700" title="Replay">

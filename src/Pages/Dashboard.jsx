@@ -26,7 +26,7 @@ const Dashboard = () => {
   const [showOtpModal, setShowOtpModal] = useState(false);
   const [totalTask, setTotalTask] = useState([]);
   const { isAuth, loading } = UseAuthCheck();
-  const dataUser = JSON.parse(localStorage.getItem("user"));
+  const dataUser = JSON.parse(localStorage.getItem("token"));
   const user = dataUser || {};
   const [getPartterns, setGetPatterns] = useState([]);
   const [totalFocusTime, setTotalFocusTime] = useState(0);

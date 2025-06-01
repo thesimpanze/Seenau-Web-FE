@@ -11,7 +11,6 @@ function Task() {
   const [taskId, setTaskId] = useState(null);
   const [editingTask, setEditingTask] = useState(null);
   const [isNewTask, setIsNewTask] = useState(false);
-  const {isAuth, loading} = UseAuthCheck();
   const user = JSON.parse(localStorage.getItem("token"))
   useEffect(() => {
     fetchTasks();
@@ -73,14 +72,14 @@ function Task() {
       console.error("Error deleting task:", error);
     }
   };
-  console.log(isAuth)
+  
   return (
     <div className="md:w-[40%] w-[70%]  mt-10 relative flex-col flex pb-10">
       <div className="flex justify-between font-bold border-b-2 mb-3">
         <h3>Task</h3>
         <h3>Duration</h3>
       </div>
-      {tasks.length && (user !== null) ? (
+      {tasks.length ? (
         tasks.map((task, index) => (
           <div key={task._id} className="border border-dashed p-3 mb-2 rounded-md flex justify-between items-center">
             <div>
