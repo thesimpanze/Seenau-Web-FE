@@ -13,7 +13,7 @@ const EditProfile = ({ onCancel }) => {
     navigate("/otp");
   };
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("token"));
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/80 px-5 md:px-0">

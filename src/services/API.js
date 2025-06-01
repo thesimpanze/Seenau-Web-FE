@@ -69,13 +69,7 @@ export const register = async (email, name, password) => {
   }
 };
 
-export const getToken = async () => {
-  try {
-    return await api.post("auth/refresh-token", {}, {withCredentials:true});
-  } catch (error) {
-    throw new Error(error.response?.data?.message || "Token refresh failed");
-  }
-};
+
 
 export const generateOTP = async () => {
   try {
@@ -97,7 +91,7 @@ export const createTask = async (name, duration, category, description) => {
   try {
     return await api.post("task/", { name, duration, category, description });
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to create task");
+    console.log(error.response?.data?.message || "Failed to create task");
   }
 };
 
@@ -129,7 +123,7 @@ export const updateTask = async (taskId, name, duration, category, description) 
   try {
     return await api.put(`task/${taskId}`, { name, duration, category, description });
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to update task");
+    console.log(error.response?.data?.message || "Failed to update task");
   }
 };
 
