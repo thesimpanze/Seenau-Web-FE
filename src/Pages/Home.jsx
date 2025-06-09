@@ -108,13 +108,13 @@ const Home = () => {
       <LandingPage />
       <div className="flex m-auto flex-col items-center">
         <Navbar mode={mode} />
-        <div className="w-[50%] flex flex-col gap-8 mt-16">
-          <div className="flex md:justify-evenly justify-between p-4 md:text-base text-sm md:gap-8 gap-4">
+        <div className="w-full md:max-w-[50%] flex flex-col gap-8 pb-4 mt-16">
+          <div className="w-full flex justify-around p-4 md:text-base text-sm md:gap-8 gap-4">
             <button onClick={() => setMode("pomodoro")} className={`${mode === "pomodoro" ? "font-bold border-b-2" : "font-semibold hover:cursor-pointer"}`}>
               Pomodoro
             </button>
-            <button onClick={() => setMode("short break")} className={`${mode === "short break" ? "font-bold border-b-2" : "font-semibold hover:cursor-pointer"}`}>
-              Short break
+            <button onClick={() => setMode("short break")} className={`${mode === "short break" ? "font-bold border-b-2" : "font-semibold  hover:cursor-pointer"}`}>
+              Short Break
             </button>
           </div>
           <button onClick={openModal}>
